@@ -31,60 +31,8 @@ public class contactInfo extends Date{
         this.instantMassaging = instantMassaging;
     }
 
+    public contactInfo(){
 
-    public String getProfileURL() {
-        return profileURL;
     }
 
-    public void setProfileURL(String profileURL) {
-        this.profileURL = profileURL;
-    }
-
-    public String getShareEmail() {
-        return shareEmail;
-    }
-
-    public void setShareEmail(String shareEmail) {
-        this.shareEmail = shareEmail;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getNumberType() {
-        return numberType;
-    }
-
-    public void setNumberType(String numberType) {
-        this.numberType = numberType;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public String getBirthdayPolicy() {
-        return BirthdayPolicy;
-    }
-
-    public void setBirthdayPolicy(String birthdayPolicy) {
-        BirthdayPolicy = birthdayPolicy;
-    }
-
-    public String getInstantMassaging() {
-        return instantMassaging;
-    }
-
-    public void setInstantMassaging(String instantMassaging) {
-        this.instantMassaging = instantMassaging;
-    }
 }
