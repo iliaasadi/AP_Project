@@ -13,10 +13,12 @@ public class JobPosition extends Date {
     private Date  jobStartDate;
     private Date jobFinishDate;
     private String description;
-    private ArrayList<String> jobSkills;
+
+    //maximum 5
+    private ArrayList<String> skills;
     private boolean changeNotification;
 
-    public JobPosition(String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, ArrayList<String> jobSkills, boolean changeNotification) {
+    public JobPosition(String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, ArrayList<String> skill, boolean changeNotification) {
         this.title = title;
         this.jobType = jobType;
         this.companyName = companyName;
@@ -26,7 +28,7 @@ public class JobPosition extends Date {
         this.jobStartDate = jobStartDate;
         this.jobFinishDate = jobFinishDate;
         this.description = description;
-        this.jobSkills = jobSkills;
+        this.skills = skill;
         this.changeNotification = changeNotification;
     }
 
