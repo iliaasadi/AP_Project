@@ -1,9 +1,10 @@
 package com.Ap_project.model;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class User  {
+public class User {
     private String ID;
     private String email;
     private String firstName;
@@ -13,15 +14,20 @@ public class User  {
     private contactInfo contactInfo;
     private ArrayList<JobPosition> jobPosition;
     private ArrayList<Education> education;
-
     private Date joinDate;
+
+    /**
+     * private Date lastLogIn;
+     * and
+     * private String status;   //want to be hired , looking for a job , want to provide service.
+     */
 
 
     public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate) {
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;
-        this. LastName = lastName;
+        this.LastName = lastName;
         this.passWord = passWord;
         this.additionalName = null;
         this.joinDate = joinDate;
@@ -29,9 +35,10 @@ public class User  {
         education = new ArrayList<>();
     }
 
-    public User(){
+    public User() {
 
     }
+
 
     public String getID() {
         return ID;
