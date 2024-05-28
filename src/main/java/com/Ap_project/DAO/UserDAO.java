@@ -56,6 +56,12 @@ public class UserDAO {
         statement.executeUpdate();
     }
 
+    /**
+     * getting user only using user ID
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public User getUser(String userID)throws SQLException{
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
         statement.setString(1 , userID);
@@ -74,6 +80,14 @@ public class UserDAO {
         return null;
     }
 
+
+    /**
+     * getting user  using pass and id (probably to get our own profile)
+     * @param userID
+     * @param userPass
+     * @return
+     * @throws SQLException
+     */
     public User getUser(String userID, String userPass) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ? AND password = ?");
         statement.setString(1, userID);
