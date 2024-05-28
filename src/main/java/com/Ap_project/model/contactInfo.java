@@ -19,6 +19,9 @@ public class contactInfo extends Date{
      */
     private String BirthdayPolicy;
 
+    /**
+     * sth like instagram / telegram / ...
+     */
     private String instantMassaging;
 
     public contactInfo(String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String birthdayPolicy, String instantMassaging) {
