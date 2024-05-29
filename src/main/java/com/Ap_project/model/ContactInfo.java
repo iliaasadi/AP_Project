@@ -2,7 +2,7 @@ package com.Ap_project.model;
 
 import java.util.Date;
 
-public class contactInfo extends Date{
+public class ContactInfo extends Date{
 
     private String profileURL;
     private String shareEmail;
@@ -25,7 +25,7 @@ public class contactInfo extends Date{
      */
     private String instantMassaging;
 
-    public contactInfo(String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
+    public ContactInfo(String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
         this.profileURL = profileURL;
         this.shareEmail = shareEmail;
         this.phoneNumber = phoneNumber;
@@ -36,7 +36,7 @@ public class contactInfo extends Date{
         this.instantMassaging = instantMassaging;
     }
 
-    public contactInfo(){
+    public ContactInfo(){
 
     }
 

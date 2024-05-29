@@ -15,11 +15,9 @@ public class User {
     private String LastName;
     private String passWord;
     private String additionalName;
-    /**
-     * *******  requirement  *******      NOW
-     * create class "location" here
-     * create string "the profession" in 60 character 'could be searched later between all professions' here
-     */
+    private String country;
+    private String city;
+    private String profession;
     private ContactInfo contactInfo;
     private ArrayList<JobPosition> jobPosition;
     private ArrayList<Education> education;
@@ -34,7 +32,7 @@ public class User {
      */
 
 
-    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate) {
+    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate, String country, String profession, String city) {
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;
@@ -44,12 +42,38 @@ public class User {
         this.joinDate = joinDate;
         jobPosition = new ArrayList<>();
         education = new ArrayList<>();
+        this.city = null;
+        this.country = null;
+        this.profession = null;
     }
 
     public User() {
 
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
 
     public String getID() {
         return ID;
@@ -99,11 +123,11 @@ public class User {
         this.additionalName = additionalName;
     }
 
-    public ContactInfo getContactInfo() {
+    public com.Ap_project.model.ContactInfo getContactInfo() {
         return contactInfo;
     }
 
-    public void setContactInfo(ContactInfo contactInfo) {
+    public void setContactInfo(com.Ap_project.model.ContactInfo contactInfo) {
         this.contactInfo = contactInfo;
     }
 
