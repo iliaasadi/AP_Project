@@ -1,9 +1,12 @@
 package com.Ap_project.model;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
-public class Education extends Date {
+import java.util.ArrayList;
+
+
+public class Education {
+    private String id;
     private String instituteName;
     private String fieldOfStudy;
     private Date educationStartDate;
@@ -15,7 +18,7 @@ public class Education extends Date {
     private String educationalActivitiesDescription;
     private String educationalDescription;
     private Skill educationalSkills;
-    private boolean changeNotification;
+    //  private boolean changeNotification;
 
     public Education(String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, boolean changeNotification) {
         this.instituteName = instituteName;
@@ -26,10 +29,19 @@ public class Education extends Date {
         this.educationalActivitiesDescription = educationalActivitiesDescription;
         this.educationalDescription = educationalDescription;
         this.educationalSkills = educationalSkills;
-        this.changeNotification = changeNotification;
+        // this.changeNotification = changeNotification;
     }
 
-    public Education(){}
+    public Education() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getInstituteName() {
         return instituteName;
@@ -95,11 +107,11 @@ public class Education extends Date {
         this.educationalSkills = educationalSkills;
     }
 
-    public boolean isChangeNotification() {
-        return changeNotification;
-    }
-
-    public void setChangeNotification(boolean changeNotification) {
-        this.changeNotification = changeNotification;
-    }
+//    public boolean isChangeNotification() {
+//        return changeNotification;
+//    }
+//
+//    public void setChangeNotification(boolean changeNotification) {
+//        this.changeNotification = changeNotification;
+//    }
 }
