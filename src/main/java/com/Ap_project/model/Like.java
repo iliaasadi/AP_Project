@@ -1,30 +1,31 @@
 package com.Ap_project.model;
 
 public class Like {
-    private String likerId ;
-    private String likedPostId ;
 
-    public Like(String likerId, String likedPostId) {
-        this.likerId = likerId;
-        this.likedPostId = likedPostId;
+    private String liker;
+    private String liked;
+
+    public Like(String liker, String liked) {
+        this.liker = liker;
+        this.liked = liked;
     }
 
     public Like() {
     }
 
-    public String getLikerId() {
-        return likerId;
+    public String getLiker() {
+        return liker;
     }
 
-    public void setLikerId(String likerId) {
-        this.likerId = likerId;
+    public void setLiker(String liker) {
+        this.liker = liker;
     }
 
-    public String getLikedPostId() {
-        return likedPostId;
+    public String getLiked() {
+        return liked;
     }
 
-    public void setLikedPostId(String likedPostId) {
-        this.likedPostId = likedPostId;
+    public void setLiked(String liked) {
+        this.liked = liked;
     }
 }
