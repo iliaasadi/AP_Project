@@ -17,7 +17,7 @@ public class ConnectDAO {
     }
 
     public void creatConnectTable() throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS connects (first_user VARCHAR(36), Second_user VARCHAR(36),connect_note VARCHAR (500), PRIMARY KEY (first_user, Second_user))");
+        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS connects (first_user VARCHAR(36), second_user VARCHAR(36),connect_note VARCHAR (500), PRIMARY KEY (first_user, second_user))");
         preparedStatement.executeUpdate();
     }
 
@@ -71,7 +71,7 @@ public class ConnectDAO {
     }
 
     public boolean inConnected(String firstUser, String secondUser) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM connects WHERE firs_user = ? AND second_user = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM connects WHERE first_user = ? AND second_user = ?");
         preparedStatement.setString(1, firstUser);
         preparedStatement.setString(2, secondUser);
         ResultSet resultSet = preparedStatement.executeQuery();

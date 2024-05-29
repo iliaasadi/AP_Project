@@ -21,7 +21,7 @@ public class EducationDAO {
     }
 
     public void saveEducation(Education education) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_discreption, education_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_descreption, education_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, education.getId());
         statement.setString(2, education.getInstituteName());
         statement.setString(3, education.getFieldOfStudy());
@@ -46,7 +46,7 @@ public class EducationDAO {
     }
 
     public void updateEducation(Education education) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_discreption = ?, education_description = ? WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ? WHERE id = ?");
         statement.setString(1, education.getId());
         statement.setString(2, education.getFieldOfStudy());
         statement.setDate(3, education.getEducationStartDate());
