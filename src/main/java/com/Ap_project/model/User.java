@@ -20,7 +20,7 @@ public class User {
      * create class "location" here
      * create string "the profession" in 60 character 'could be searched later between all professions' here
      */
-    private contactInfo contactInfo;
+    private ContactInfo contactInfo;
     private ArrayList<JobPosition> jobPosition;
     private ArrayList<Education> education;
     private Date joinDate;
@@ -99,11 +99,11 @@ public class User {
         this.additionalName = additionalName;
     }
 
-    public com.Ap_project.model.contactInfo getContactInfo() {
+    public ContactInfo getContactInfo() {
         return contactInfo;
     }
 
-    public void setContactInfo(com.Ap_project.model.contactInfo contactInfo) {
+    public void setContactInfo(ContactInfo contactInfo) {
         this.contactInfo = contactInfo;
     }
 
