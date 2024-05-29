@@ -9,9 +9,9 @@ public class Education extends Date {
     private Date educationStartDate;
     private Date educationFinishDate;
     private float grade;
-    /**
-     * ""shrhe faaliat va anjoman""  fargh darad ba ""tozihat"" 2ta field jodan
-     */
+
+
+    // ""shrhe faaliat va anjoman""  fargh darad ba ""tozihat"" 2ta field jodan
     private String educationalActivitiesDescription;
     private String educationalDescription;
     private Skill educationalSkills;

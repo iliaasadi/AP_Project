@@ -7,12 +7,20 @@ public class JobPosition extends Date {
     private String title;
 
     /**
+     * job type ---> has multi option:
      * part time , full time , self-employment , freelance , contractual , intern , paid intern , seasonal
      */
     private String jobType;
     private String companyName;
     private String companyAddress;
+    /**
+     * companyType ---> has multi option:
+     * in Workplace or hybrid or telecommuting
+     */
     private String companyType;
+    /**
+     * check box for occupationStatus
+     */
     private String occupationStatus;
     private Date jobStartDate;
     private Date jobFinishDate;

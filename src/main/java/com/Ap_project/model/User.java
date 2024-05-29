@@ -5,12 +5,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class User {
+    /**
+     * *******  requirement  *******
+     * ""profile photo"" and ""background photo"" and ""headline"" -> 'in character' should extend later
+     */
     private String ID;
     private String email;
     private String firstName;
     private String LastName;
     private String passWord;
     private String additionalName;
+    /**
+     * *******  requirement  *******      NOW
+     * create class "location" here
+     * create string "the profession" in 60 character 'could be searched later between all professions' here
+     */
     private contactInfo contactInfo;
     private ArrayList<JobPosition> jobPosition;
     private ArrayList<Education> education;
@@ -19,7 +28,9 @@ public class User {
     /**
      * private Date lastLogIn;
      * and
-     * private String status;   //want to be hired , looking for a job , want to provide service.
+     * *******  requirement  *******      NOW
+     * //want to be hired , looking for a job , want to provide service.
+     * private String status; '3 options'
      */
 
 
