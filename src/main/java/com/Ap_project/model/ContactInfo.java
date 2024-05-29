@@ -1,9 +1,11 @@
 package com.Ap_project.model;
 
-import java.util.Date;
 
-public class contactInfo extends Date{
+import java.sql.Date;
 
+public class ContactInfo {
+
+    private String ID;
     private String profileURL;
     private String shareEmail;
     private String phoneNumber;
@@ -25,7 +27,8 @@ public class contactInfo extends Date{
      */
     private String instantMassaging;
 
-    public contactInfo(String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
+    public ContactInfo(String ID,String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
+        this.ID = ID;
         this.profileURL = profileURL;
         this.shareEmail = shareEmail;
         this.phoneNumber = phoneNumber;
@@ -36,8 +39,15 @@ public class contactInfo extends Date{
         this.instantMassaging = instantMassaging;
     }
 
-    public contactInfo(){
+    public ContactInfo(){
+    }
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getProfileURL() {
