@@ -9,14 +9,14 @@ public class contactInfo extends Date{
     private String phoneNumber;
 
     /**
-    * *Home || work || mobile
+    * Home || work || mobile
     */
     private String numberType;
     private Date birthdate;
     private String address;
 
     /**
-     * your connection || network || everyone
+     * just me ||your connection || network || everyone
      */
     private String BirthdayPolicy;
 
