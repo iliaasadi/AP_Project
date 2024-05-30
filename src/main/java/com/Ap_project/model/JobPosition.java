@@ -1,9 +1,9 @@
 package com.Ap_project.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class JobPosition extends Date {
+public class JobPosition{
     private String Id;
     private String title;
 
