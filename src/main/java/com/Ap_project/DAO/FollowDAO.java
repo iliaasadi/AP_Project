@@ -18,7 +18,7 @@ public class FollowDAO {
     }
 
     public void creatFollowTable() throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS follows (follower VARCHAR(36), followed VARCHAR(36), PRIMARY KEY (follower, followed))");
+        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS follows (follower VARCHAR(255), followed VARCHAR(255), PRIMARY KEY (follower, followed))");
         preparedStatement.executeUpdate();
     }
 

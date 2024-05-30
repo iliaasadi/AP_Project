@@ -14,9 +14,13 @@ public class EducationDAO {
         connection = DataBase.getConnection();
         createEducationTable();
     }
-
+    /**
+     * check class """"skill"""" and relate it here !!!!!!!!!!!!!!!!!!!
+     *
+     * @throws SQLException
+     */
     public void createEducationTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS educations (id VARCHAR(36) PRIMARY KEY, institute VARCHAR (30) , field_study VARCHAR (255) , start_date DATE , finish_date DATE , grade FLOAT , activity_description VARCHAR (255) , education_description VARCHAR (255))");
+        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS educations (id VARCHAR(255) PRIMARY KEY, institute VARCHAR (255) , field_study VARCHAR (255) , start_date DATE , finish_date DATE , grade FLOAT , activity_description VARCHAR (255) , education_description VARCHAR (255))");
         statement.executeUpdate();
     }
 

@@ -17,7 +17,7 @@ public class ConnectDAO {
     }
 
     public void creatConnectTable() throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS connects (first_user VARCHAR(36), second_user VARCHAR(36),connect_note VARCHAR (500), PRIMARY KEY (first_user, second_user))");
+        PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS connects (first_user VARCHAR(255), second_user VARCHAR(255),connect_note VARCHAR (500), PRIMARY KEY (first_user, second_user))");
         preparedStatement.executeUpdate();
     }
 
