@@ -12,8 +12,8 @@ public class UserDAO {
     private final Connection connection;
 
 
-    public UserDAO(Connection connection) throws SQLException {
-        this.connection = connection;
+    public UserDAO() throws SQLException {
+        this.connection = DataBase.getConnection();
         createUserTable();
     }
 
@@ -22,7 +22,7 @@ public class UserDAO {
         statement.executeUpdate();
     }
 
-    public void saveUSer(User user)throws SQLException{
+    public void saveUser(User user)throws SQLException{
         PreparedStatement statement =connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name,city , country , join_date) VALUES (?,?,?,?,?,?,?,?,?) ");
         statement.setString(1,user.getID());
         statement.setString(2, user.getFirstName());
@@ -133,6 +133,7 @@ public class UserDAO {
             user.setJoinDate(resultSet.getDate("join_date"));
             users.add(user);
         }
+
         return users;
     }
 

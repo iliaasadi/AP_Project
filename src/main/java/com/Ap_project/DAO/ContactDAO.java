@@ -1,25 +1,25 @@
 package com.Ap_project.DAO;
 
 
-import com.Ap_project.model.ContactInfo;
+import com.Ap_project.model.Contact;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ContactInfoDAO {
+public class ContactDAO {
     private final Connection connection;
-    public ContactInfoDAO() throws SQLException {
+    public ContactDAO() throws SQLException {
         connection = DataBase.getConnection();
-        creatContactInfoTable();
+        creatContactTable();
     }
 
-    private void creatContactInfoTable() throws SQLException {
+    public void creatContactTable() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS contacts (id VARCHAR (255) PRIMARY KEY, profile_url VARCHAR (255) , email VARCHAR (255) , phone_number VARCHAR (255) , phone_type VARCHAR (255) , birth_date DATE , birthday_policy VARCHAR (255),address VARCHAR (255) , instant_message VARCHAR (255))");
         statement.executeUpdate();
         statement.executeUpdate();
     }
 
-    private void saveContact(ContactInfo contact) throws SQLException{
+    public void saveContact(Contact contact) throws SQLException{
         PreparedStatement statement = connection.prepareStatement("INSERT INTO contacs (id , profile_url , email , phone_number , phone_type ,birth_date , birthday_policy , address , instant_message ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, contact.getID());
         statement.setString(2, contact.getProfileURL());
@@ -45,7 +45,7 @@ public class ContactInfoDAO {
         statement.executeUpdate();
     }
 
-    public void updateContacts(ContactInfo contact) throws SQLException {
+    public void updateContacts(Contact contact) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("UPDATE contacts SET email = ? , phone_nuber = ? , phone_type = ? , birth_date = ? , birthday_policy = ? , address = ? , instant_message = ? WHERE user_id = ?");
         statement.setString(1, contact.getShareEmail());
         statement.setString(2, contact.getPhoneNumber());
@@ -57,13 +57,13 @@ public class ContactInfoDAO {
         statement.executeUpdate();
     }
 
-    public ContactInfo getContact(String userId) throws SQLException {
+    public Contact getContact(String userId) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM contacts WHERE user_id = ?");
         statement.setString(1, userId);
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            ContactInfo contact = new ContactInfo();
+            Contact contact = new Contact();
             contact.setID(resultSet.getString("id"));
             contact.setProfileURL(resultSet.getString("profile_url"));
             contact.setShareEmail(resultSet.getString("email"));
@@ -79,13 +79,13 @@ public class ContactInfoDAO {
         return null;
     }
 
-    public ArrayList<ContactInfo> getContacts() throws SQLException {
-        ArrayList<ContactInfo> contacts = new ArrayList<ContactInfo>();
+    public ArrayList<Contact> getContacts() throws SQLException {
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM contacts");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
-            ContactInfo contact = new ContactInfo();
+            Contact contact = new Contact();
             contact.setID(resultSet.getString("id"));
             contact.setProfileURL(resultSet.getString("profile_url"));
             contact.setShareEmail(resultSet.getString("email"));

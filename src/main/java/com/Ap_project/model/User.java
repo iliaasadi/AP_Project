@@ -18,7 +18,7 @@ public class User {
     private String country;
     private String city;
     private String profession;
-    private ContactInfo contactInfo;
+    private Contact contactInfo;
     private ArrayList<JobPosition> jobPosition;
     private ArrayList<Education> education;
     private Date joinDate;
@@ -32,7 +32,7 @@ public class User {
      */
 
 
-    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate ,String country , String profession , String city) {
+    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate ,String country, String city, String profession ) {
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;
@@ -123,13 +123,13 @@ public class User {
         this.additionalName = additionalName;
     }
 
-    public com.Ap_project.model.ContactInfo getContactInfo() {
-        return contactInfo;
-    }
+    //public com.Ap_project.model.ContactInfo getContactInfo() {
+    //    return contactInfo;
+    //}
 
-    public void setContactInfo(com.Ap_project.model.ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
-    }
+    //public void setContactInfo(com.Ap_project.model.ContactInfo contactInfo) {
+      //  this.contactInfo = contactInfo;
+    //}
 
     public ArrayList<JobPosition> getJobPosition() {
         return jobPosition;
