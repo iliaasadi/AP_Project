@@ -14,7 +14,7 @@ public class ContactInfoDAO {
     }
 
     private void creatContactInfoTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS contacts (id VARCHAR (45) PRIMARY KEY, profile_url VARCHAR (100) , email VARCHAR (100) , phone_number VARCHAR (20) , phone_type VARCHAR (20) , birth_date DATE , birthday_policy VARCHAR (50),address VARCHAR (255) , instant_message VARCHAR (255))");
+        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS contacts (id VARCHAR (255) PRIMARY KEY, profile_url VARCHAR (255) , email VARCHAR (255) , phone_number VARCHAR (255) , phone_type VARCHAR (255) , birth_date DATE , birthday_policy VARCHAR (255),address VARCHAR (255) , instant_message VARCHAR (255))");
         statement.executeUpdate();
         statement.executeUpdate();
     }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class JobPosition extends Date {
+    private String Id;
     private String title;
 
     /**
@@ -27,9 +28,13 @@ public class JobPosition extends Date {
     private String description;
 
     private Skill skills;
-    private boolean changeNotification;
+    /**
+     * check boolean changeNotification
+     */
+    //private boolean changeNotification;
 
-    public JobPosition(String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, Skill skill, boolean changeNotification) {
+    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, Skill skill) {
+        this.Id = Id;
         this.title = title;
         this.jobType = jobType;
         this.companyName = companyName;
@@ -40,10 +45,19 @@ public class JobPosition extends Date {
         this.jobFinishDate = jobFinishDate;
         this.description = description;
         this.skills = skill;
-        this.changeNotification = changeNotification;
+        //this.changeNotification = changeNotification;
     }
 
-    public JobPosition() {}
+    public JobPosition() {
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -124,13 +138,13 @@ public class JobPosition extends Date {
     public void setSkills(Skill skills) {
         this.skills = skills;
     }
-
-    public boolean isChangeNotification() {
-        return changeNotification;
-    }
-
-    public void setChangeNotification(boolean changeNotification) {
-        this.changeNotification = changeNotification;
-    }
+//
+//    public boolean isChangeNotification() {
+//        return changeNotification;
+//    }
+//
+//    public void setChangeNotification(boolean changeNotification) {
+//        this.changeNotification = changeNotification;
+//    }
 }
 

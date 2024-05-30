@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 public class Education {
-    private String id;
+    private String Id;
     private String instituteName;
     private String fieldOfStudy;
     private Date educationStartDate;
@@ -20,7 +20,8 @@ public class Education {
     private Skill educationalSkills;
     //  private boolean changeNotification;
 
-    public Education(String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, boolean changeNotification) {
+    public Education(String Id, String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, boolean changeNotification) {
+        this.Id = Id;
         this.instituteName = instituteName;
         this.fieldOfStudy = fieldOfStudy;
         this.educationStartDate = educationStartDate;
@@ -36,11 +37,11 @@ public class Education {
     }
 
     public String getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String Id) {
+        this.Id = Id;
     }
 
     public String getInstituteName() {
