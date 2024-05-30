@@ -17,7 +17,7 @@ public class LikeDAO {
         createLikeTable();
     }
 
-    private void createLikeTable() throws SQLException {
+    public void createLikeTable() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS likes (liker VARCHAR(255), liked VARCHAR(255), PRIMARY KEY (liker, liked))");
         statement.executeUpdate();
 
