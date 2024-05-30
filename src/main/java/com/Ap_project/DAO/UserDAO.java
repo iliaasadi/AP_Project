@@ -18,19 +18,21 @@ public class UserDAO {
     }
 
     public void createUserTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY ,first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) UNIQUE , password VARCHAR(255) , additional_name VARCHAR(255) , join_date DATE )");
+        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY ,first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) UNIQUE , password VARCHAR(255) , additional_name VARCHAR(255),city VARCHAR (255),country VARCHAR (255), join_date DATE )");
         statement.executeUpdate();
     }
 
     public void saveUSer(User user)throws SQLException{
-        PreparedStatement statement =connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name , join_date) VALUES (?,?,?,?,?,?,?) ");
+        PreparedStatement statement =connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name,city , country , join_date) VALUES (?,?,?,?,?,?,?,?,?) ");
         statement.setString(1,user.getID());
         statement.setString(2, user.getFirstName());
         statement.setString(3, user.getLastName());
         statement.setString(4, user.getEmail());
         statement.setString(5, user.getPassWord());
         statement.setString(6, user.getAdditionalName());
-        statement.setDate(7, user.getJoinDate());
+        statement.setString(7, user.getCity());
+        statement.setString(8, user.getCountry());
+        statement.setDate(9, user.getJoinDate());
 
         statement.executeUpdate();
     }
@@ -47,12 +49,14 @@ public class UserDAO {
     }
 
     public void updateUser(User user)throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,additional_name = ? WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,city = ? , country = ?,additional_name = ? WHERE id = ?");
         statement.setString(1, user.getFirstName());
         statement.setString(2, user.getLastName());
         statement.setString(3, user.getEmail());
         statement.setString(5, user.getAdditionalName());
-        statement.setString(6, user.getID());
+        statement.setString(6, user.getCity());
+        statement.setString(7, user.getCountry());
+        statement.setString(8, user.getID());
 
         statement.executeUpdate();
     }
@@ -73,8 +77,10 @@ public class UserDAO {
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setEmail(resultSet.getString("email"));
-            user.setAdditionalName(resultSet.getString("additional_name"));
             user.setPassWord(resultSet.getString("password"));
+            user.setAdditionalName(resultSet.getString("additional_name"));
+            user.setCity(resultSet.getString("city"));
+            user.setCountry(resultSet.getString("country"));
             user.setJoinDate(resultSet.getDate("join_date"));
             return user;
         }
@@ -100,8 +106,10 @@ public class UserDAO {
             user.setFirstName(resultSet.getString("first_name"));
             user.setLastName(resultSet.getString("last_name"));
             user.setEmail(resultSet.getString("email"));
-            user.setAdditionalName(resultSet.getString("additional_name"));
             user.setPassWord(resultSet.getString("password"));
+            user.setAdditionalName(resultSet.getString("additional_name"));
+            user.setCity(resultSet.getString("city"));
+            user.setCountry(resultSet.getString("country"));
             user.setJoinDate(resultSet.getDate("join_date"));
             return user;
         }
@@ -120,6 +128,8 @@ public class UserDAO {
             user.setEmail(resultSet.getString("email"));
             user.setPassWord(resultSet.getString("password"));
             user.setAdditionalName(resultSet.getString("additional_name"));
+            user.setCity(resultSet.getString("city"));
+            user.setCountry(resultSet.getString("country"));
             user.setJoinDate(resultSet.getDate("join_date"));
             users.add(user);
         }
