@@ -3,7 +3,7 @@ package com.Ap_project.model;
 
 import java.sql.Date;
 
-public class ContactInfo {
+public class Contact{
 
     private String ID;
     private String profileURL;
@@ -27,7 +27,7 @@ public class ContactInfo {
      */
     private String instantMassaging;
 
-    public ContactInfo(String ID,String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
+    public Contact(String ID,String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
         this.ID = ID;
         this.profileURL = profileURL;
         this.shareEmail = shareEmail;
@@ -39,7 +39,7 @@ public class ContactInfo {
         this.instantMassaging = instantMassaging;
     }
 
-    public ContactInfo(){
+    public Contact(){
     }
 
     public String getID() {
