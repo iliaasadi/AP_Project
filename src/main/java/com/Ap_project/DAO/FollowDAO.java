@@ -14,10 +14,10 @@ public class FollowDAO {
     private final Connection connection;
     public FollowDAO() throws SQLException{
         connection = DataBase.getConnection();
-        creatFollowTable();
+        createFollowTable();
     }
 
-    public void creatFollowTable() throws SQLException{
+    public void createFollowTable() throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS follows (follower VARCHAR(255), followed VARCHAR(255), PRIMARY KEY (follower, followed))");
         preparedStatement.executeUpdate();
     }
