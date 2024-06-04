@@ -28,14 +28,14 @@ public class User {
     private Work_Type workType;
 
 
-    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate, String workType) {
+    public User(String ID, String email, String firstName, String lastName, String passWord,String additionalName, Date joinDate, String workType) {
 
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;
         this.LastName = lastName;
         this.passWord = passWord;
-        this.additionalName = null;
+        this.additionalName = additionalName;
         this.joinDate = joinDate;
         this.city = null;
         this.country = null;

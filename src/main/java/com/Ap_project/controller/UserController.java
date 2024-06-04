@@ -44,8 +44,8 @@ public class UserController {
         userDAO = new UserDAO();
     }
 
-    public void createUser(String id, String email, String firstName, String lastName, String passWord, Date joinDate, String workType) throws SQLException {
-        User user = new User(id, email , firstName , lastName , passWord , joinDate , workType );
+    public void createUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, Date joinDate, String workType) throws SQLException {
+        User user = new User(id, email , firstName , lastName , passWord ,additionalName, joinDate , workType );
         if (isUserExists(id))
             userDAO.updateUser(user);
         else
@@ -79,8 +79,8 @@ public class UserController {
         contactDAO.deleteContacts();
     }
 
-    public void updateUser(String id, String email, String firstName, String lastName, String passWord, Date joinDate, String workType) throws SQLException {
-        User user = new User(id, email, firstName, lastName, passWord, joinDate, workType);
+    public void updateUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, Date joinDate, String workType) throws SQLException {
+        User user = new User(id, email, firstName, lastName, passWord,additionalName, joinDate, workType);
         userDAO.updateUser(user);
     }
 
