@@ -56,6 +56,7 @@ public class UserDAO {
         statement.setString(1, user.getFirstName());
         statement.setString(2, user.getLastName());
         statement.setString(3, user.getEmail().toLowerCase());
+        statement.setString(4, user.getPassWord());
         statement.setString(5, user.getAdditionalName());
         statement.setString(6, user.getCity());
         statement.setString(7, user.getCountry());

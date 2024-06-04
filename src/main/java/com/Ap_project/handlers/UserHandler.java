@@ -28,7 +28,7 @@ public class UserHandler implements HttpHandler {
                         body.append(line);
                     }
                     JSONObject jsonObject = new JSONObject(body.toString());
-                    userController.createUser(jsonObject.getString("id"),jsonObject.getString("email"), jsonObject.getString("firstname"), jsonObject.getString("lastname"), jsonObject.getString("password"), new Date(jsonObject.getLong("joindate")), jsonObject.getString("worktype"));
+                    userController.createUser(jsonObject.getString("id"),jsonObject.getString("email"), jsonObject.getString("firstname"), jsonObject.getString("lastname"), jsonObject.getString("password"), jsonObject.getString("additionalname"),new Date(jsonObject.getLong("joindate")), jsonObject.getString("worktype"));
                     exchange.sendResponseHeaders(200, "DONE".length());
                     OutputStream outputStream = exchange.getResponseBody();
                     outputStream.write("DONE".getBytes());
