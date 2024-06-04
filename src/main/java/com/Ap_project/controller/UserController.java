@@ -4,6 +4,8 @@ import com.Ap_project.DAO.ContactDAO;
 import com.Ap_project.DAO.UserDAO;
 import com.Ap_project.model.Contact;
 import com.Ap_project.model.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -104,11 +106,12 @@ public class UserController {
      * @return
      * @throws SQLException
      */
-    public User getUserById(String id) throws SQLException {
+    public String getUserById(String id) throws SQLException, JsonProcessingException {
         User user = userDAO.getUser(id);
         if (user == null) return null;
 
-        return user;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(user);
     }
 
 
@@ -119,10 +122,11 @@ public class UserController {
      * @return
      * @throws SQLException
      */
-    public Contact getBioByUserId(String userId) throws SQLException {
+    public String getBioByUserId(String userId) throws SQLException, JsonProcessingException {
         Contact contact = contactDAO.getContact(userId);
         if (contact == null) return null;
-        return contact;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(contact);
     }
 
     /**
@@ -132,10 +136,11 @@ public class UserController {
      * @throws SQLException
      */
 
-    public ArrayList<User> getUsers() throws SQLException {
+    public String getUsers() throws SQLException, JsonProcessingException {
         ArrayList<User> users = userDAO.getUsers();
 
-        return users;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(users);
     }
 
 
@@ -145,10 +150,11 @@ public class UserController {
      * @return
      * @throws SQLException
      */
-    public ArrayList<Contact> getContacts() throws SQLException {
+    public String getContacts() throws SQLException, JsonProcessingException {
         ArrayList<Contact> contacts = contactDAO.getContacts();
 
-        return contacts;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(contacts);
     }
 
     /**
@@ -158,10 +164,11 @@ public class UserController {
      * @return
      * @throws SQLException
      */
-    public User getUserByIdAndPass(String id, String pass) throws SQLException {
+    public String getUserByIdAndPass(String id, String pass) throws SQLException, JsonProcessingException {
         User user = userDAO.getUser(id, pass);
         if (user == null) return null;
-        return user;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(user);
     }
 
 

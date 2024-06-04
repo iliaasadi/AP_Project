@@ -3,6 +3,8 @@ package com.Ap_project.controller;
 
 import com.Ap_project.DAO.LikeDAO;
 import com.Ap_project.model.Like;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -38,9 +40,10 @@ public class LikeController {
      * @return
      * @throws SQLException
      */
-    public List<Like> getLikes(String Id) throws SQLException {
+    public String getLikes(String Id) throws SQLException, JsonProcessingException {
         List<Like> likes = likeDAO.getLikes(Id);
-        return likes;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(likes);
     }
 
 
@@ -51,9 +54,10 @@ public class LikeController {
      * @return
      * @throws SQLException
      */
-    public List<Like> getLikers(String Id) throws SQLException {
+    public String getLikers(String Id) throws SQLException, JsonProcessingException {
         List<Like> likes = likeDAO.getLikers(Id);
-        return likes;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(likes);
     }
 
 
@@ -63,8 +67,9 @@ public class LikeController {
      * @return
      * @throws SQLException
      */
-    public List<Like> getAll() throws SQLException {
+    public String getAll() throws SQLException, JsonProcessingException {
         List<Like> likes = likeDAO.getAll();
-        return likes;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(likes);
     }
 }
