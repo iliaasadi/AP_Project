@@ -1,8 +1,6 @@
 package com.Ap_project.DAO;
 
-import com.Ap_project.model.Like;
 import com.Ap_project.model.Post;
-import com.Ap_project.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class postDAO {
+public class PostDAO {
     private final Connection connection;
 
-    public postDAO() throws SQLException {
+    public PostDAO() throws SQLException {
         this.connection = DataBase.getConnection();
     }
 
