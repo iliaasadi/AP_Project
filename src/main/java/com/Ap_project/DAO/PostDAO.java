@@ -55,7 +55,7 @@ public class PostDAO {
     }
 
     public Post getPost(String postID) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM posts WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM posts WHERE postID = ?");
         statement.setString(1, postID);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
