@@ -171,5 +171,9 @@ public class UserController {
         return objectMapper.writeValueAsString(user);
     }
 
+    public boolean isUserExist(String email) throws SQLException {
+        return userDAO.isUserExist(email);
+    }
+
 
 }
