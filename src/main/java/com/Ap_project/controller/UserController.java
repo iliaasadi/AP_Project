@@ -122,7 +122,7 @@ public class UserController {
      * @return
      * @throws SQLException
      */
-    public String getBioByUserId(String userId) throws SQLException, JsonProcessingException {
+    public String getContactByUserId(String userId) throws SQLException, JsonProcessingException {
         Contact contact = contactDAO.getContact(userId);
         if (contact == null) return null;
         ObjectMapper objectMapper = new ObjectMapper();
