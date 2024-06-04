@@ -45,7 +45,7 @@ public class EducationDAO {
         statement.executeUpdate();
     }
 
-    public void deleteUsers() throws SQLException {
+    public void deleteEducations() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("DELETE FROM educations");
         statement.executeUpdate();
     }
