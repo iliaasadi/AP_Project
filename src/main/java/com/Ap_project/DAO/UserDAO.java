@@ -94,6 +94,14 @@ public class UserDAO {
         return null;
     }
 
+    public boolean isUserExist(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?");
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.next();
+    }
+
 
     /**
      * getting user  using pass and id (probably to get our own profile)
