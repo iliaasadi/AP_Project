@@ -16,6 +16,8 @@ public class Contact {
         WORK
     }
 
+
+
     private phoneType numberType;
     private Date birthdate;
     private String address;
