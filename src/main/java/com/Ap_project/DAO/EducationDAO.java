@@ -25,7 +25,7 @@ public class EducationDAO {
     }
 
     public void saveEducation(Education education) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_descreption, education_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_descreption, education_description, edu_notification) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)");
         statement.setString(1, education.getId());
         statement.setString(2, education.getInstituteName());
         statement.setString(3, education.getFieldOfStudy());
@@ -34,6 +34,7 @@ public class EducationDAO {
         statement.setFloat(6, education.getGrade());
         statement.setString(7, education.getEducationalActivitiesDescription());
         statement.setString(8, education.getEducationalDescription());
+        statement.setString(9,education.getEduNotification());
 
         statement.executeUpdate();
     }
@@ -50,14 +51,17 @@ public class EducationDAO {
     }
 
     public void updateEducation(Education education) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ? WHERE id = ?");
-        statement.setString(1, education.getId());
+        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ?,edu_notification =? WHERE id = ?");
+        statement.setString(1, education.getInstituteName());
         statement.setString(2, education.getFieldOfStudy());
         statement.setDate(3, education.getEducationStartDate());
         statement.setDate(4, education.getEducationFinishDate());
         statement.setFloat(5, education.getGrade());
         statement.setString(6, education.getEducationalActivitiesDescription());
         statement.setString(7, education.getEducationalDescription());
+        statement.setString(8,education.getEduNotification());
+        statement.setString(9,education.getId());
+
 
         statement.executeUpdate();
     }
@@ -77,6 +81,7 @@ public class EducationDAO {
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
+            education.setEduNotification("edu_notification");
 
             return education;
         }
@@ -99,6 +104,7 @@ public class EducationDAO {
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
+            education.setEduNotification(resultSet.getString("edu_notification"));
 
             educations.add(education);
         }

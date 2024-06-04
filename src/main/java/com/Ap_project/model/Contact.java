@@ -3,43 +3,57 @@ package com.Ap_project.model;
 
 import java.sql.Date;
 
-public class Contact{
+public class Contact {
 
     private String ID;
     private String profileURL;
     private String shareEmail;
     private String phoneNumber;
 
-    /**
-    * Home || work || mobile
-    */
-    private String numberType;
+    enum phoneType {
+        MOBILE,
+        HOME,
+        WORK
+    }
+
+    private phoneType numberType;
     private Date birthdate;
     private String address;
 
-    /**
-     * just me ||your connection || network || everyone
-     */
-    private String BirthdayPolicy;
+    enum notification {
+        ME,
+        CONTACTS,
+        EVERYONE
+    }
+
+    private notification BirthdayPolicy;
 
     /**
      * sth like instagram / telegram / ...
      */
     private String instantMassaging;
 
-    public Contact(String ID,String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate,String address, String birthdayPolicy, String instantMassaging) {
+    public Contact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String address, String birthdayPolicy, String instantMassaging) {
         this.ID = ID;
         this.profileURL = profileURL;
         this.shareEmail = shareEmail;
         this.phoneNumber = phoneNumber;
-        this.numberType = numberType;
+        switch (numberType) {
+            case "mobile" -> this.numberType = phoneType.MOBILE;
+            case "home" -> this.numberType = phoneType.HOME;
+            case "work" -> this.numberType = phoneType.WORK;
+        }
         this.birthdate = birthdate;
         this.address = address;
-        BirthdayPolicy = birthdayPolicy;
+        switch (birthdayPolicy) {
+            case "me" -> this.BirthdayPolicy = notification.ME;
+            case "contacts" -> this.BirthdayPolicy = notification.CONTACTS;
+            case "everyone" -> this.BirthdayPolicy = notification.EVERYONE;
+        }
         this.instantMassaging = instantMassaging;
     }
 
-    public Contact(){
+    public Contact() {
     }
 
     public String getID() {
@@ -74,12 +88,13 @@ public class Contact{
         this.phoneNumber = phoneNumber;
     }
 
-    public String getNumberType() {
-        return numberType;
-    }
 
     public void setNumberType(String numberType) {
-        this.numberType = numberType;
+        switch (numberType) {
+            case "mobile" -> this.numberType = phoneType.MOBILE;
+            case "home" -> this.numberType = phoneType.HOME;
+            case "work" -> this.numberType = phoneType.WORK;
+        }
     }
 
     public Date getBirthdate() {
@@ -98,12 +113,20 @@ public class Contact{
         this.address = address;
     }
 
+    public String getNumberType() {
+        return numberType.name().toLowerCase();
+    }
+
     public String getBirthdayPolicy() {
-        return BirthdayPolicy;
+        return BirthdayPolicy.name().toLowerCase();
     }
 
     public void setBirthdayPolicy(String birthdayPolicy) {
-        BirthdayPolicy = birthdayPolicy;
+        switch (birthdayPolicy) {
+            case "me" -> this.BirthdayPolicy = notification.ME;
+            case "contacts" -> this.BirthdayPolicy = notification.CONTACTS;
+            case "everyone" -> this.BirthdayPolicy = notification.EVERYONE;
+        }
     }
 
     public String getInstantMassaging() {
