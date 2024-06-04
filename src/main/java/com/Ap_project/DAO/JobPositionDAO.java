@@ -50,7 +50,7 @@ public class JobPositionDAO {
         statement.executeUpdate();
     }
 
-    public void deleteUsers() throws SQLException {
+    public void deleteAll() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("DELETE FROM job_position");
         statement.executeUpdate();
     }
@@ -98,7 +98,7 @@ public class JobPositionDAO {
         return null;
     }
 
-    public ArrayList<JobPosition> getJobPosition() throws SQLException {
+    public ArrayList<JobPosition> getJobPositions() throws SQLException {
         ArrayList<JobPosition> jobPositions = new ArrayList<JobPosition>();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM job_position");
         ResultSet resultSet = statement.executeQuery();

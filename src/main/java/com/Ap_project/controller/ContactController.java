@@ -36,6 +36,7 @@ public class ContactController {
 
     public String getContact(String ID) throws JsonProcessingException, SQLException {
         Contact contact = contactDAO.getContact(ID);
+        if(contact == null)return null;
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(contact);
     }
