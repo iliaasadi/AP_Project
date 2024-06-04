@@ -22,22 +22,23 @@ public class UserDAO {
         statement.executeUpdate();
     }
 
-    public void saveUser(User user)throws SQLException{
-        PreparedStatement statement =connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name,city , country , join_date) VALUES (?,?,?,?,?,?,?,?,?) ");
-        statement.setString(1,user.getID());
+    public void saveUser(User user) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name,city , country , join_date, work_type) VALUES (?,?,?,?,?,?,?,?,?,?) ");
+        statement.setString(1, user.getID());
         statement.setString(2, user.getFirstName());
         statement.setString(3, user.getLastName());
-        statement.setString(4, user.getEmail());
+        statement.setString(4, user.getEmail().toLowerCase());
         statement.setString(5, user.getPassWord());
         statement.setString(6, user.getAdditionalName());
         statement.setString(7, user.getCity());
         statement.setString(8, user.getCountry());
         statement.setDate(9, user.getJoinDate());
+        statement.setString(10, user.getWorkType());
 
         statement.executeUpdate();
     }
 
-    public void deleteUser(User user) throws SQLException{
+    public void deleteUser(User user) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?");
         statement.setString(1, user.getID());
         statement.executeUpdate();
@@ -48,30 +49,32 @@ public class UserDAO {
         statement.executeUpdate();
     }
 
-    public void updateUser(User user)throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,city = ? , country = ?,additional_name = ? WHERE id = ?");
+    public void updateUser(User user) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,additional_name = ?,city = ? , country = ? , work_type =? WHERE id = ?");
         statement.setString(1, user.getFirstName());
         statement.setString(2, user.getLastName());
-        statement.setString(3, user.getEmail());
+        statement.setString(3, user.getEmail().toLowerCase());
         statement.setString(5, user.getAdditionalName());
         statement.setString(6, user.getCity());
         statement.setString(7, user.getCountry());
-        statement.setString(8, user.getID());
+        statement.setString(8, user.getWorkType());
+        statement.setString(9, user.getID());
 
         statement.executeUpdate();
     }
 
     /**
      * getting user only using user ID
+     *
      * @param userID
      * @return
      * @throws SQLException
      */
-    public User getUser(String userID)throws SQLException{
+    public User getUser(String userID) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
-        statement.setString(1 , userID);
-        ResultSet resultSet =statement.executeQuery();
-        if(resultSet.next()){
+        statement.setString(1, userID);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
             User user = new User();
             user.setID(resultSet.getString("id"));
             user.setFirstName(resultSet.getString("first_name"));
@@ -82,6 +85,7 @@ public class UserDAO {
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
             user.setJoinDate(resultSet.getDate("join_date"));
+            user.setWorkType(resultSet.getString("work_type"));
             return user;
         }
         return null;
@@ -90,6 +94,7 @@ public class UserDAO {
 
     /**
      * getting user  using pass and id (probably to get our own profile)
+     *
      * @param userID
      * @param userPass
      * @return
@@ -111,16 +116,17 @@ public class UserDAO {
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
             user.setJoinDate(resultSet.getDate("join_date"));
+            user.setWorkType(resultSet.getString("work_type"));
             return user;
         }
         return null;
     }
 
-    public ArrayList<User> getUsers()throws SQLException{
+    public ArrayList<User> getUsers() throws SQLException {
         ArrayList<User> users = new ArrayList<User>();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
         ResultSet resultSet = statement.executeQuery();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             User user = new User();
             user.setID(resultSet.getString("id"));
             user.setID(resultSet.getString("first_name"));
@@ -131,6 +137,7 @@ public class UserDAO {
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
             user.setJoinDate(resultSet.getDate("join_date"));
+            user.setWorkType(resultSet.getString("work_type"));
             users.add(user);
         }
 

@@ -8,6 +8,36 @@ public class Skill {
     private String skill4 = null;
     private String skill5 = null;
 
+    public Skill(String userID) {
+        this.userID = userID;
+    }
+
+    public Skill(String userID, String skill1) {
+        this.userID = userID;
+        this.skill1 = skill1;
+    }
+
+    public Skill(String userID, String skill1, String skill2) {
+        this.userID = userID;
+        this.skill1 = skill1;
+        this.skill2 = skill2;
+    }
+
+    public Skill(String userID, String skill1, String skill2, String skill3) {
+        this.userID = userID;
+        this.skill1 = skill1;
+        this.skill2 = skill2;
+        this.skill3 = skill3;
+    }
+
+    public Skill(String userID, String skill1, String skill2, String skill3, String skill4) {
+        this.userID = userID;
+        this.skill1 = skill1;
+        this.skill2 = skill2;
+        this.skill3 = skill3;
+        this.skill4 = skill4;
+    }
+
     public Skill(String userID, String skill1, String skill2, String skill3, String skill4, String skill5) {
         this.userID = userID;
         this.skill1 = skill1;
@@ -17,8 +47,6 @@ public class Skill {
         this.skill5 = skill5;
     }
 
-    public Skill(){
-    }
 
     public String getUserID() {
         return userID;

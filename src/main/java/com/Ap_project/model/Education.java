@@ -13,14 +13,17 @@ public class Education {
     private Date educationFinishDate;
     private float grade;
 
-
-    // ""shrhe faaliat va anjoman""  fargh darad ba ""tozihat"" 2ta field jodan
+    // ""shrhe faaliat"" va ""anjoman""  fargh darad ba ""tozihat"" 2ta field jodan
     private String educationalActivitiesDescription;
     private String educationalDescription;
-    private Skill educationalSkills;
-    //  private boolean changeNotification;
-
-    public Education(String Id, String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, boolean changeNotification) {
+//    private Skill educationalSkills;
+    enum notification {
+        ME,
+        CONTACTS,
+        EVERYONE
+    }
+    private notification eduNotification;
+    public Education(String Id, String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) {
         this.Id = Id;
         this.instituteName = instituteName;
         this.fieldOfStudy = fieldOfStudy;
@@ -29,8 +32,12 @@ public class Education {
         this.grade = grade;
         this.educationalActivitiesDescription = educationalActivitiesDescription;
         this.educationalDescription = educationalDescription;
-        this.educationalSkills = educationalSkills;
-        // this.changeNotification = changeNotification;
+        //this.educationalSkills = educationalSkills;
+        switch (notificationEduStr) {
+            case "me" -> this.eduNotification = notification.ME;
+            case "contacts" -> this.eduNotification = notification.CONTACTS;
+            case "everyone" -> this.eduNotification = notification.EVERYONE;
+        }
     }
 
     public Education() {
@@ -99,20 +106,25 @@ public class Education {
     public void setEducationalDescription(String educationalDescription) {
         this.educationalDescription = educationalDescription;
     }
-
-    public Skill getEducationalSkills() {
-        return educationalSkills;
-    }
-
-    public void setEducationalSkills(Skill educationalSkills) {
-        this.educationalSkills = educationalSkills;
-    }
-
-//    public boolean isChangeNotification() {
-//        return changeNotification;
+//
+//    public Skill getEducationalSkills() {
+//        return educationalSkills;
 //    }
 //
-//    public void setChangeNotification(boolean changeNotification) {
-//        this.changeNotification = changeNotification;
+//    public void setEducationalSkills(Skill educationalSkills) {
+//        this.educationalSkills = educationalSkills;
 //    }
+
+
+    public String getEduNotification() {
+        return eduNotification.name().toLowerCase();
+    }
+
+    public void setEduNotification(String notificationEduStr){
+        switch (notificationEduStr) {
+            case "me" -> this.eduNotification = notification.ME;
+            case "contacts" -> this.eduNotification = notification.CONTACTS;
+            case "everyone" -> this.eduNotification = notification.EVERYONE;
+        }
+    }
 }
