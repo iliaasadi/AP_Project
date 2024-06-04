@@ -19,6 +19,16 @@ public class CommentDAO {
         statement.executeUpdate();
     }
 
+    public void saveComment(Comment comment) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO comments (commentID , postID , userID , text , comment_date) VALUES (? ,?, ? , ? , ?)");
+        statement.setString(1 , comment.getCommentID());
+        statement.setString(2, comment.getPostID());
+        statement.setString(3, comment.getUserID());
+        statement.setDate(4, comment.getDate());
+
+        statement.executeUpdate();
+    }
+
     public void updateComment(Comment comment) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("UPDATE comments SET   text = ?  WHERE postID = ?");
         statement.setString(1, comment.getText());
