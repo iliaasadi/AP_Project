@@ -70,7 +70,7 @@ public class ConnectDAO {
         return connects;
     }
 
-    public boolean inConnected(String firstUser, String secondUser) throws SQLException {
+    public boolean isConnected(String firstUser, String secondUser) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM connects WHERE first_user = ? AND second_user = ?");
         preparedStatement.setString(1, firstUser);
         preparedStatement.setString(2, secondUser);
