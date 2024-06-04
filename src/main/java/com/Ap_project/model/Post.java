@@ -1,14 +1,25 @@
 package com.Ap_project.model;
 
+import java.sql.Date;
+
 public class Post {
     private String userId;
     private String postID;
     private String message;
+    private Date date;
 
-    public Post(String userId, String postID, String message) {
+    public Post(String userId, String postID, String message, Date date) {
         this.userId = userId;
         this.postID = postID;
         this.message = message;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Post(){
