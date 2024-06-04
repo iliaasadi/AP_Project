@@ -5,12 +5,14 @@ import java.sql.Date;
 public class Comment {
     private String commentID;
     private String postID;
+    private String userID;
     private String text;
     private Date date;
 
-    public Comment(String commentID, String postID, String text, Date date) {
+    public Comment(String commentID, String postID,String userID, String text, Date date) {
         this.commentID = commentID;
         this.postID = postID;
+        this.userID = userID;
         this.text = text;
         this.date = date;
     }
@@ -20,6 +22,14 @@ public class Comment {
 
     public String getCommentID() {
         return commentID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public void setCommentID(String commentID) {
