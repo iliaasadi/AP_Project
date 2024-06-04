@@ -20,16 +20,16 @@ public class User {
     private String profession;
     private Date joinDate;
 
-    /**
-     * private Date lastLogIn;
-     * and
-     * *******  requirement  *******      NOW
-     * //want to be hired , looking for a job , want to provide service.
-     * private String status; '3 options'
-     */
+    enum Work_Type{
+        WANT_TO_HIRED,
+        LOOKING_FOR_JOB,
+        WANT_TO_PROVIDE_SERVICE
+    }
+    private Work_Type workType;
 
 
-    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate, String country, String city, String profession) {
+    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate, String workType) {
+
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;
@@ -40,6 +40,12 @@ public class User {
         this.city = null;
         this.country = null;
         this.profession = null;
+        switch (workType){
+            case "want_to_hired" -> this.workType = Work_Type.WANT_TO_HIRED;
+            case "looking_for_job" -> this.workType = Work_Type.LOOKING_FOR_JOB;
+            case "want_to_provide_service" -> this.workType = Work_Type.WANT_TO_PROVIDE_SERVICE;
+
+        }
     }
 
     public User() {
@@ -125,4 +131,16 @@ public class User {
     public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
     }
+
+    public String getWorkType() {
+        return workType.name().toLowerCase();
+    }
+
+    public void setWorkType(String workType) {
+        switch (workType){
+            case "want_to_hired" -> this.workType = Work_Type.WANT_TO_HIRED;
+            case "looking_for_job" -> this.workType = Work_Type.LOOKING_FOR_JOB;
+            case "want_to_provide_service" -> this.workType = Work_Type.WANT_TO_PROVIDE_SERVICE;
+
+        }    }
 }

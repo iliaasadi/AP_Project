@@ -7,18 +7,29 @@ public class JobPosition {
     private String Id;
     private String title;
 
-    /**
-     * job type ---> has multi option:
-     * part time , full time , self-employment , freelance , contractual , intern , paid intern , seasonal
-     */
-    private String jobType;
+    enum Types {
+        PART_TIME,
+        FULL_TIME,
+        SELF_EMPLOYED,
+        FREELANCE,
+        CONTRACTUAL,
+        INTERN,
+        PAID_INTERN,
+        SEASONAL
+    }
+
+    private Types jobType;
     private String companyName;
     private String companyAddress;
-    /**
-     * companyType ---> has multi option:
-     * in Workplace or hybrid or telecommuting
-     */
-    private String companyType;
+
+    enum Type_C {
+        WORKPLACE,
+        HYBRID,
+        TELECOMMUTING
+
+    }
+
+    private Type_C companyType;
     /**
      * check box for occupationStatus
      */
@@ -34,16 +45,33 @@ public class JobPosition {
         CONTACTS,
         EVERYONE
     }
+
+
     private notification jobNotification;
 
 
-    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, String description, String skill ,String notificationJobStr) {
+    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, String description, String skill, String notificationJobStr) {
         this.Id = Id;
         this.title = title;
-        this.jobType = jobType;
+        switch (jobType) {
+            case "part_time" -> this.jobType = Types.PART_TIME;
+            case "full_time" -> this.jobType = Types.FULL_TIME;
+            case "self-employment" -> this.jobType = Types.SELF_EMPLOYED;
+            case "freelance" -> this.jobType = Types.FREELANCE;
+            case "contractual" -> this.jobType = Types.CONTRACTUAL;
+            case "intern" -> this.jobType = Types.INTERN;
+            case "paid_intern" -> this.jobType = Types.PAID_INTERN;
+            case "seasonal" -> this.jobType = Types.SEASONAL;
+        }
         this.companyName = companyName;
         this.companyAddress = companyAddress;
-        this.companyType = companyType;
+        switch (companyType) {
+            case "workplace" -> this.companyType = Type_C.WORKPLACE;
+            case "telecommuting" -> this.companyType = Type_C.TELECOMMUTING;
+            case "hybrid" -> this.companyType = Type_C.HYBRID;
+        }
+
+
         this.occupationStatus = occupationStatus;
         this.jobStartDate = jobStartDate;
         this.jobFinishDate = null;
@@ -58,13 +86,28 @@ public class JobPosition {
         }
     }
 
-    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, String skill , String notificationJob) {
+
+    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, String skill, String notificationJob) {
+
         this.Id = Id;
         this.title = title;
-        this.jobType = jobType;
+        switch (jobType) {
+            case "part_time" -> this.jobType = Types.PART_TIME;
+            case "full_time" -> this.jobType = Types.FULL_TIME;
+            case "self-employment" -> this.jobType = Types.SELF_EMPLOYED;
+            case "freelance" -> this.jobType = Types.FREELANCE;
+            case "contractual" -> this.jobType = Types.CONTRACTUAL;
+            case "intern" -> this.jobType = Types.INTERN;
+            case "paid_intern" -> this.jobType = Types.PAID_INTERN;
+            case "seasonal" -> this.jobType = Types.SEASONAL;
+        }
         this.companyName = companyName;
         this.companyAddress = companyAddress;
-        this.companyType = companyType;
+        switch (companyType) {
+            case "workplace" -> this.companyType = Type_C.WORKPLACE;
+            case "telecommuting" -> this.companyType = Type_C.TELECOMMUTING;
+            case "hybrid" -> this.companyType = Type_C.HYBRID;
+        }
         this.occupationStatus = occupationStatus;
         this.jobStartDate = jobStartDate;
         this.jobFinishDate = jobFinishDate;
@@ -100,11 +143,20 @@ public class JobPosition {
     }
 
     public String getJobType() {
-        return jobType;
+        return jobType.name().toLowerCase();
     }
 
     public void setJobType(String jobType) {
-        this.jobType = jobType;
+        switch (jobType) {
+            case "part_time" -> this.jobType = Types.PART_TIME;
+            case "full_time" -> this.jobType = Types.FULL_TIME;
+            case "self-employment" -> this.jobType = Types.SELF_EMPLOYED;
+            case "freelance" -> this.jobType = Types.FREELANCE;
+            case "contractual" -> this.jobType = Types.CONTRACTUAL;
+            case "intern" -> this.jobType = Types.INTERN;
+            case "paid_intern" -> this.jobType = Types.PAID_INTERN;
+            case "seasonal" -> this.jobType = Types.SEASONAL;
+        }
     }
 
     public String getCompanyName() {
@@ -124,11 +176,15 @@ public class JobPosition {
     }
 
     public String getCompanyType() {
-        return companyType;
+        return companyType.name().toLowerCase();
     }
 
     public void setCompanyType(String companyType) {
-        this.companyType = companyType;
+        switch (companyType) {
+            case "workplace" -> this.companyType = Type_C.WORKPLACE;
+            case "telecommuting" -> this.companyType = Type_C.TELECOMMUTING;
+            case "hybrid" -> this.companyType = Type_C.HYBRID;
+        }
     }
 
     public String getOccupationStatus() {
@@ -169,11 +225,14 @@ public class JobPosition {
 
     public void setSkills(String skill) {
         skills.add(skill);
+
     }
 
     public boolean isActivation() {
         return activation;
     }
+
+
     public void setActivation(boolean activation) {
         this.activation = activation;
     }
@@ -182,7 +241,9 @@ public class JobPosition {
         return jobNotification.name().toLowerCase();
     }
 
-    public void setJobNotification(String notificationJobStr){
+
+    public void setJobNotification(String notificationJobStr) {
+
         switch (notificationJobStr) {
             case "me" -> this.jobNotification = notification.ME;
             case "contacts" -> this.jobNotification = notification.CONTACTS;
