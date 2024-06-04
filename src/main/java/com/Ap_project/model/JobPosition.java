@@ -46,6 +46,7 @@ public class JobPosition {
         EVERYONE
     }
 
+
     private notification jobNotification;
 
 
@@ -69,6 +70,8 @@ public class JobPosition {
             case "telecommuting" -> this.companyType = Type_C.TELECOMMUTING;
             case "hybrid" -> this.companyType = Type_C.HYBRID;
         }
+
+
         this.occupationStatus = occupationStatus;
         this.jobStartDate = jobStartDate;
         this.jobFinishDate = null;
@@ -83,7 +86,9 @@ public class JobPosition {
         }
     }
 
+
     public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, String skill, String notificationJob) {
+
         this.Id = Id;
         this.title = title;
         switch (jobType) {
@@ -220,11 +225,13 @@ public class JobPosition {
 
     public void setSkills(String skill) {
         skills.add(skill);
+
     }
 
     public boolean isActivation() {
         return activation;
     }
+
 
     public void setActivation(boolean activation) {
         this.activation = activation;
@@ -234,7 +241,9 @@ public class JobPosition {
         return jobNotification.name().toLowerCase();
     }
 
+
     public void setJobNotification(String notificationJobStr) {
+
         switch (notificationJobStr) {
             case "me" -> this.jobNotification = notification.ME;
             case "contacts" -> this.jobNotification = notification.CONTACTS;

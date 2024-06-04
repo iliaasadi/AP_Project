@@ -27,7 +27,9 @@ public class User {
     }
     private Work_Type workType;
 
+
     public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate, String workType) {
+
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;

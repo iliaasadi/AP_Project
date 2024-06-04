@@ -49,8 +49,10 @@ public class UserDAO {
         statement.executeUpdate();
     }
 
+
     public void updateUser(User user) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,additional_name = ?,city = ? , country = ? , work_type =? WHERE id = ?");
+
         statement.setString(1, user.getFirstName());
         statement.setString(2, user.getLastName());
         statement.setString(3, user.getEmail().toLowerCase());
