@@ -28,7 +28,7 @@ public class JobPositionDAO {
     }
 
     public void saveJobPosition(JobPosition jobPosition) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO job_position (id, title, job_type, company_name, company_address, company_type, occupation_status, job_start_date, job_finish_date, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO job_position (id, title, job_type, company_name, company_address, company_type, occupation_status, job_start_date, job_finish_date, description,job_notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
         statement.setString(1, jobPosition.getId());
         statement.setString(2, jobPosition.getTitle());
         statement.setString(3, jobPosition.getJobType());
@@ -39,6 +39,7 @@ public class JobPositionDAO {
         statement.setDate(8, jobPosition.getJobStartDate());
         statement.setDate(9, jobPosition.getJobFinishDate());
         statement.setString(10, jobPosition.getDescription());
+        statement.setString(11, jobPosition.getJobNotification());
 
         statement.executeUpdate();
     }
@@ -55,17 +56,19 @@ public class JobPositionDAO {
     }
 
     public void updateJobPosition(JobPosition jobPosition) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE job_position SET id = ?, title = ?, job_type = ?, company_name = ?, company_address = ?, company_type = ?,occupation_status = ?,job_start_date = ?,job_finish_date = ?, description = ? WHERE id = ?");
-        statement.setString(1, jobPosition.getId());
-        statement.setString(2, jobPosition.getTitle());
-        statement.setString(3, jobPosition.getJobType());
-        statement.setString(4, jobPosition.getCompanyName());
-        statement.setString(5, jobPosition.getCompanyAddress());
-        statement.setString(6, jobPosition.getCompanyType());
-        statement.setString(7, jobPosition.getOccupationStatus());
-        statement.setDate(8, jobPosition.getJobStartDate());
-        statement.setDate(9, jobPosition.getJobFinishDate());
-        statement.setString(10, jobPosition.getDescription());
+        PreparedStatement statement = connection.prepareStatement("UPDATE job_position SET title = ?, job_type = ?, company_name = ?, company_address = ?, company_type = ?,occupation_status = ?,job_start_date = ?,job_finish_date = ?, description = ?,job_notification =? WHERE id = ?");
+
+        statement.setString(1, jobPosition.getTitle());
+        statement.setString(2, jobPosition.getJobType());
+        statement.setString(3, jobPosition.getCompanyName());
+        statement.setString(4, jobPosition.getCompanyAddress());
+        statement.setString(5, jobPosition.getCompanyType());
+        statement.setString(6, jobPosition.getOccupationStatus());
+        statement.setDate(7, jobPosition.getJobStartDate());
+        statement.setDate(8, jobPosition.getJobFinishDate());
+        statement.setString(9, jobPosition.getDescription());
+        statement.setString(10, jobPosition.getJobNotification());
+        statement.setString(11, jobPosition.getId());
 
         statement.executeUpdate();
     }
@@ -87,6 +90,7 @@ public class JobPositionDAO {
             jobPosition.setJobStartDate(resultSet.getDate("job_start_date"));
             jobPosition.setJobFinishDate(resultSet.getDate("job_finish_date"));
             jobPosition.setDescription(resultSet.getString("description"));
+            jobPosition.setJobNotification(resultSet.getString("job_notification"));
 
             return jobPosition;
         }
@@ -111,6 +115,8 @@ public class JobPositionDAO {
             jobPosition.setJobStartDate(resultSet.getDate("job_start_date"));
             jobPosition.setJobFinishDate(resultSet.getDate("job_finish_date"));
             jobPosition.setDescription(resultSet.getString("description"));
+            jobPosition.setJobNotification(resultSet.getString("job_notification"));
+
 
             jobPositions.add(jobPosition);
         }

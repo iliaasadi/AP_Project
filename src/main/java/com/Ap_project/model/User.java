@@ -18,9 +18,6 @@ public class User {
     private String country;
     private String city;
     private String profession;
-    private Contact contactInfo;
-    private ArrayList<JobPosition> jobPosition;
-    private ArrayList<Education> education;
     private Date joinDate;
 
     /**
@@ -32,7 +29,7 @@ public class User {
      */
 
 
-    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate ,String country, String city, String profession ) {
+    public User(String ID, String email, String firstName, String lastName, String passWord, Date joinDate, String country, String city, String profession) {
         this.ID = ID;
         this.email = email;
         this.firstName = firstName;
@@ -40,8 +37,6 @@ public class User {
         this.passWord = passWord;
         this.additionalName = null;
         this.joinDate = joinDate;
-        jobPosition = new ArrayList<>();
-        education = new ArrayList<>();
         this.city = null;
         this.country = null;
         this.profession = null;
@@ -121,30 +116,6 @@ public class User {
 
     public void setAdditionalName(String additionalName) {
         this.additionalName = additionalName;
-    }
-
-    //public com.Ap_project.model.ContactInfo getContactInfo() {
-    //    return contactInfo;
-    //}
-
-    //public void setContactInfo(com.Ap_project.model.ContactInfo contactInfo) {
-      //  this.contactInfo = contactInfo;
-    //}
-
-    public ArrayList<JobPosition> getJobPosition() {
-        return jobPosition;
-    }
-
-    public void setJobPosition(ArrayList<JobPosition> jobPosition) {
-        this.jobPosition = jobPosition;
-    }
-
-    public ArrayList<Education> getEducation() {
-        return education;
-    }
-
-    public void setEducation(ArrayList<Education> education) {
-        this.education = education;
     }
 
     public Date getJoinDate() {

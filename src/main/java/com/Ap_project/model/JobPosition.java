@@ -3,7 +3,7 @@ package com.Ap_project.model;
 import java.sql.Date;
 import java.util.ArrayList;
 
-public class JobPosition{
+public class JobPosition {
     private String Id;
     private String title;
 
@@ -26,14 +26,39 @@ public class JobPosition{
     private Date jobStartDate;
     private Date jobFinishDate;
     private String description;
+    private ArrayList<String> skills = new ArrayList<>();
+    private boolean activation;
 
-    private Skill skills;
-    /**
-     * check boolean changeNotification
-     */
-    //private boolean changeNotification;
+    enum notification {
+        ME,
+        CONTACTS,
+        EVERYONE
+    }
+    private notification jobNotification;
 
-    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, Skill skill) {
+
+    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, String description, String skill ,String notificationJobStr) {
+        this.Id = Id;
+        this.title = title;
+        this.jobType = jobType;
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.companyType = companyType;
+        this.occupationStatus = occupationStatus;
+        this.jobStartDate = jobStartDate;
+        this.jobFinishDate = null;
+        this.description = description;
+        this.skills.add(skill);
+        this.activation = true;
+        //active
+        switch (notificationJobStr) {
+            case "me" -> this.jobNotification = notification.ME;
+            case "contacts" -> this.jobNotification = notification.CONTACTS;
+            case "everyone" -> this.jobNotification = notification.EVERYONE;
+        }
+    }
+
+    public JobPosition(String Id, String title, String jobType, String companyName, String companyAddress, String companyType, String occupationStatus, Date jobStartDate, Date jobFinishDate, String description, String skill , String notificationJob) {
         this.Id = Id;
         this.title = title;
         this.jobType = jobType;
@@ -44,8 +69,15 @@ public class JobPosition{
         this.jobStartDate = jobStartDate;
         this.jobFinishDate = jobFinishDate;
         this.description = description;
-        this.skills = skill;
-        //this.changeNotification = changeNotification;
+        this.skills.add(skill);
+        this.activation = false;
+        //not active
+        switch (notificationJob) {
+            case "me" -> this.jobNotification = notification.ME;
+            case "contacts" -> this.jobNotification = notification.CONTACTS;
+            case "everyone" -> this.jobNotification = notification.EVERYONE;
+        }
+
     }
 
     public JobPosition() {
@@ -131,20 +163,32 @@ public class JobPosition{
         this.description = description;
     }
 
-    public Skill getSkills() {
+    public ArrayList<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(Skill skills) {
-        this.skills = skills;
+    public void setSkills(String skill) {
+        skills.add(skill);
     }
-//
-//    public boolean isChangeNotification() {
-//        return changeNotification;
-//    }
-//
-//    public void setChangeNotification(boolean changeNotification) {
-//        this.changeNotification = changeNotification;
-//    }
+
+    public boolean isActivation() {
+        return activation;
+    }
+    public void setActivation(boolean activation) {
+        this.activation = activation;
+    }
+
+    public String getJobNotification() {
+        return jobNotification.name().toLowerCase();
+    }
+
+    public void setJobNotification(String notificationJobStr){
+        switch (notificationJobStr) {
+            case "me" -> this.jobNotification = notification.ME;
+            case "contacts" -> this.jobNotification = notification.CONTACTS;
+            case "everyone" -> this.jobNotification = notification.EVERYONE;
+        }
+    }
+
 }
 
