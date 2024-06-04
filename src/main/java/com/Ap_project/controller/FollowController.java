@@ -2,6 +2,8 @@ package com.Ap_project.controller;
 
 import com.Ap_project.DAO.FollowDAO;
 import com.Ap_project.model.Follow;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -38,9 +40,10 @@ public class FollowController {
      * @return
      * @throws SQLException
      */
-    public List<Follow> getFollows(String userId) throws SQLException {
+    public String getFollows(String userId) throws SQLException, JsonProcessingException {
         List<Follow> follows = followDAO.getFollows(userId);
-        return follows;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(follows);
     }
 
 
@@ -50,9 +53,10 @@ public class FollowController {
      * @return
      * @throws SQLException
      */
-    public List<Follow> getFollowers(String userId) throws SQLException {
+    public String getFollowers(String userId) throws SQLException, JsonProcessingException {
         List<Follow> follows = followDAO.getFollowers(userId);
-        return follows;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(follows);
     }
 
 
@@ -61,8 +65,9 @@ public class FollowController {
      * @return
      * @throws SQLException
      */
-    public List<Follow> getAll() throws SQLException {
+    public String getAll() throws SQLException, JsonProcessingException {
         List<Follow> follows = followDAO.getAll();
-        return follows;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(follows);
     }
 }
