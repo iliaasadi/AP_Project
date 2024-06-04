@@ -18,7 +18,7 @@ public class UserDAO {
     }
 
     public void createUserTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY ,first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) UNIQUE , password VARCHAR(255) , additional_name VARCHAR(255),city VARCHAR (255),country VARCHAR (255), join_date DATE )");
+        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY ,first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) UNIQUE , password VARCHAR(255) , additional_name VARCHAR(255),city VARCHAR (255),country VARCHAR (255), join_date DATE,work_type VARCHAR (255) )");
         statement.executeUpdate();
     }
 

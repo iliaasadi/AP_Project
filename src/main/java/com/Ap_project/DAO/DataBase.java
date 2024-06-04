@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DataBase {
     private final static String url = "jdbc:mysql://170.0.0.1:3386/MyLinkedIn";
     private final static String user = "root";
-    private final static String password = "Emami2005";
+    private final static String password = "Il12345678";
 
     private DataBase(){
     }
