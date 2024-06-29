@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostController {
@@ -16,13 +17,13 @@ public class PostController {
         this.postDAO = new PostDAO();
     }
 
-    public void creatPost(String userId, String postID, String message, Date date) throws SQLException {
-        Post post  = new Post(userId , postID , message , date);
+    public void creatPost(String userId, String message, Date date) throws SQLException {
+        Post post  = new Post(userId , message , date);
         postDAO.savePost(post);
     }
 
-    public void updatePost(String userId, String postID, String message, Date date) throws SQLException {
-        Post post = new Post(userId, postID, message, date);
+    public void updatePost(String userId, String postID, String message) throws SQLException {
+        Post post = new Post(userId, postID, message);
         postDAO.updatePost(post);
     }
 
@@ -43,6 +44,17 @@ public class PostController {
 
     public String getAll() throws SQLException, JsonProcessingException {
         List<Post> posts = postDAO.getAll();
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(posts);
+    }
+    public void deleteAllPostsOfaUser(String id) throws SQLException {
+        postDAO.deleteAllPostsOfaUser(id);
+    }
+    public String getAllPostsOfaUser(String id) throws SQLException, JsonProcessingException {
+        ArrayList<Post> posts = postDAO.getAllPostsOfaUser(id);
+        if (posts.isEmpty()) {
+            return null;
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(posts);
     }
