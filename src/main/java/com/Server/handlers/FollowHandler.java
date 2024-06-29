@@ -26,10 +26,12 @@ public class FollowHandler implements HttpHandler {
         String path = exchange.getRequestURI().getPath();
         String[] pathParts = path.split("/");
         String response = "";
-        String id = JwtExtractor.ExtractToken(exchange);
-        String follower_id = pathParts[2];
+        String id = "";
+        String follower_id = "";
 
         try {
+            id = JwtExtractor.ExtractToken(exchange);
+            follower_id = pathParts[2];
             if (id == null) {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());

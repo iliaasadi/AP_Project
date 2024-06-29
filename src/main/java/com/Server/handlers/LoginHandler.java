@@ -13,7 +13,7 @@ public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String response = "";
-        UserController userController;
+        UserController userController = null;
         try {
             userController = new UserController();
             String[] paths = exchange.getRequestURI().getPath().split("/");

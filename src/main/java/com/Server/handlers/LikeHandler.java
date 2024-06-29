@@ -29,16 +29,18 @@ public class LikeHandler implements HttpHandler {
             throw new RuntimeException(e);
         }
 
-        String request = exchange.getRequestMethod();
-        String path = exchange.getRequestURI().getPath();
-        String[] pathParts = path.split("/");
+
         String response = "";
         String id = "";
-        String post_id = pathParts[2];
+        String post_id = "";
 
         try {
+            String request = exchange.getRequestMethod();
+            String path = exchange.getRequestURI().getPath();
+            String[] pathParts = path.split("/");
             try {
                 id = JwtExtractor.ExtractToken(exchange);
+                post_id = pathParts[2];
                 if (id == null) {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());

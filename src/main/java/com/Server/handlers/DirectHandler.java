@@ -22,40 +22,44 @@ public class DirectHandler implements HttpHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String request = exchange.getRequestMethod();
-        String path = exchange.getRequestURI().getPath();
-        String[] pathParts = path.split("/");
+
         String response = "";
-        String id = JwtExtractor.ExtractToken(exchange);
+        String id = "";
 
         try {
+            String request = exchange.getRequestMethod();
+            String path = exchange.getRequestURI().getPath();
+            String[] pathParts = path.split("/");
+            id = JwtExtractor.ExtractToken(exchange);
             if (id == null) {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
             }
-        } catch (Exception e) {
-            response = "Error";
-            exchange.sendResponseHeaders(400, response.length());
-            sendResponse(exchange, response);
-        }
-        try {
-            if (request.equals("POST"))
-                response = null;
 
-            if (request.equals("DELETE"))
-                response = null;
+            try {
+                if (request.equals("POST"))
+                    response = null;
 
-            if (request.equals("PUT"))
-                response = null;
-            else {
-                response = "Wrong input";
+                if (request.equals("DELETE"))
+                    response = null;
+
+                if (request.equals("PUT"))
+                    response = null;
+                else {
+                    response = "Wrong input";
+                    exchange.sendResponseHeaders(400, response.length());
+                }
+            } catch (Exception e) {
+                response = "Error";
                 exchange.sendResponseHeaders(400, response.length());
+                e.printStackTrace();
             }
         } catch (Exception e) {
             response = "Error";
             exchange.sendResponseHeaders(400, response.length());
-            e.printStackTrace();
+            sendResponse(exchange, response);
+            return;
         }
         sendResponse(exchange, response);
     }
