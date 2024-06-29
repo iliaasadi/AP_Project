@@ -1,6 +1,7 @@
 package com.Server;
 
 import com.Server.handlers.LoginHandler;
+import com.Server.handlers.PostHandler;
 import com.Server.handlers.SearchHandler;
 import com.Server.handlers.UserHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -15,7 +16,7 @@ public class Server {
             httpServer.createContext("/user", new UserHandler());
             httpServer.createContext("/login", new LoginHandler());
             httpServer.createContext("/search", new SearchHandler());
-//            httpServer.createContext("/post", new PostHandler());
+            httpServer.createContext("/post", new PostHandler());
 //            httpServer.createContext("/like", new LikeHandler());
 //            httpServer.createContext("/comment", new CommentHandler());
 //            httpServer.createContext("/connection", new ConnectionHandler());

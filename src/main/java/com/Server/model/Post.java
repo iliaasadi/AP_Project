@@ -8,7 +8,13 @@ public class Post {
     private String message;
     private Date date;
 
-    public Post(String userId, String postID, String message, Date date) {
+    public Post(String userId, String message, Date date) {
+        this.userId = userId;
+        this.message = message;
+        this.date = date;
+    }
+
+    public Post(String userId, String postID, String message) {
         this.userId = userId;
         this.postID = postID;
         this.message = message;

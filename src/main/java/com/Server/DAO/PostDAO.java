@@ -84,4 +84,31 @@ public class PostDAO {
         }
         return posts;
     }
+    public void deleteAllPostsOfaUser(String id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM posts WHERE id = ?");
+
+        statement.setString(1, id);
+
+        statement.executeUpdate();
+    }
+    public ArrayList<Post> getAllPostsOfaUser(String id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM posts WHERE id = ?");
+
+        statement.setString(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        ArrayList<Post> posts = new ArrayList<>();
+
+        while (resultSet.next()){
+            Post post = new Post();
+            post.setPostID(resultSet.getString("postID"));
+            post.setUserId(resultSet.getString("userID"));
+            post.setMessage(resultSet.getString("message"));
+            post.setDate(resultSet.getDate("post_date"));
+            posts.add(post);
+        }
+
+        return posts;
+    }
 }
