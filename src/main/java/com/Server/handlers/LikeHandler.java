@@ -2,6 +2,7 @@ package com.Server.handlers;
 
 
 import com.Server.JWT.JwtExtractor;
+import com.Server.controller.LikeController;
 import com.Server.controller.PostController;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -11,28 +12,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Date;
 import java.sql.SQLException;
 
-
-
-public class PostHandler implements HttpHandler {
+public class LikeHandler implements HttpHandler {
 
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
         PostController postController = null;
+        LikeController likeController = null;
+
         try {
             postController = new PostController();
+            likeController = new LikeController();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         String request = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         String[] pathParts = path.split("/");
         String response = "";
         String id = "";
+        String post_id = pathParts[2];
 
         try {
             try {
@@ -49,41 +51,46 @@ public class PostHandler implements HttpHandler {
                 sendResponse(exchange, response);
                 return;
             }
+
             if (request.equals("GET")) {
 
                 if (pathParts.length == 3) {
-                    if (pathParts[2].equals("all")) { // post/all
-                        response = postController.getAllPostsOfaUser(id);
+                    if (pathParts[2].equals("all")) {// get all user likes  /like/all
+                        response = likeController.getLikes(id);
                         if (response == null) {
                             response = "Wrong input";
                             exchange.sendResponseHeaders(400, response.length());
                         } else {
+
                             exchange.sendResponseHeaders(200, response.length());
                         }
-                    } else { //post/post_id
+                    } else { //like/post_id    get all likes of one post
                         try {
-                            String postId = pathParts[2];
-                            response = postController.getPost(postId);
-                            if (response != null) {
-                                exchange.sendResponseHeaders(200, response.length());
-                            } else {
+
+                            response = likeController.getLikers(post_id);
+                            if (response == null) {
                                 response = "Wrong input";
                                 exchange.sendResponseHeaders(400, response.length());
+                            } else {
+                                exchange.sendResponseHeaders(200, response.length());
                             }
                         } catch (NumberFormatException e) {
                             response = "Error";
                             exchange.sendResponseHeaders(400, response.length());
                         }
                     }
-                } else if (pathParts.length == 4) {
-                    if (pathParts[2].equals("all") && pathParts[3].equals("all")) { //post/all/all
-                        response = postController.getAll();
-                        if (response != null) {
-                            exchange.sendResponseHeaders(200, response.length());
-                        } else {
+                } else if (pathParts.length == 4) { // like/all/all
+                    if (pathParts[2].equals("all") && pathParts[3].equals("all")) {
+                        response = likeController.getAll();
+                        if (response == null) {
                             response = "Wrong input";
                             exchange.sendResponseHeaders(400, response.length());
+                        } else {
+                            exchange.sendResponseHeaders(200, response.length());
                         }
+                    } else {
+                        response = "Wrong input";
+                        exchange.sendResponseHeaders(400, response.length());
                     }
                 } else {
                     response = "Wrong input";
@@ -91,99 +98,20 @@ public class PostHandler implements HttpHandler {
                 }
             }
             if (request.equals("POST")) {
-                if (pathParts.length == 2) {
-                    JSONObject jsonObject = getJsonObject(exchange);
-                    String message = jsonObject.getString("message");
-                    if (id != null) {
-                        /**
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         * check date
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         */
-                        postController.creatPost(id, message, new Date(1231232321));
-                        response = "Done";
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
-            }
-            if (request.equals("DELETE")) {
 
-                if (pathParts.length == 3) { //post/all or post/post_id
-                    if (pathParts[2].equals("all")) {
-                        postController.deleteAllPostsOfaUser(id);
-                        response = "Done";
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        try {
-                            String postId = (pathParts[2]);
-                            if (postController.getPost(postId) == null) {
+
+                if (pathParts.length == 3) { //like/post_id
+                    try {
+
+                        if (postController.postExists(post_id)) {
+                            if (likeController.likeExists(id, post_id)) {
                                 response = "Wrong input";
                                 exchange.sendResponseHeaders(400, response.length());
                             } else {
-                                postController.deletePost(postId);
+                                likeController.saveLike(id, post_id);
                                 response = "Done";
                                 exchange.sendResponseHeaders(200, response.length());
                             }
-                        } catch (NumberFormatException e) {
-                            response = "Error";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
-                    }
-                } else if (pathParts.length == 4) { //post/all/all
-                    if (pathParts[2].equals("all") && pathParts[3].equals("all")) {
-                        postController.deleteAll();
-                        response = "Done";
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
-            }
-            if (request.equals("PUT")) {
-                if (pathParts.length == 3) { //post/post_id
-                    JSONObject jsonObject = getJsonObject(exchange);
-                    String message = jsonObject.getString("message");
-                    try {
-                        String postId = (pathParts[2]);
-                        if (postController.getPost(postId) != null) {
-                            postController.updatePost(id, postId, message);
-                            response = "Done";
-                            exchange.sendResponseHeaders(200, response.length());
                         } else {
                             response = "Wrong input";
                             exchange.sendResponseHeaders(400, response.length());
@@ -196,14 +124,40 @@ public class PostHandler implements HttpHandler {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                 }
-            } else {
-                response = "Wrong input";
-                exchange.sendResponseHeaders(400, response.length());
             }
+            if (request.equals("DELETE")) {
+
+                if (pathParts.length == 3) { //like/post_id
+                    try {
+                        if (postController.postExists(post_id)) {
+                            if (likeController.likeExists(id, post_id)) {
+                                likeController.deleteLike(id, post_id);
+                                response = "Done";
+                                exchange.sendResponseHeaders(200, response.length());
+                            } else {
+                                response = "Wrong input";
+                                exchange.sendResponseHeaders(400, response.length());
+                            }
+                        } else {
+                            response = "Wrong input";
+                            exchange.sendResponseHeaders(400, response.length());
+                        }
+                    } catch (NumberFormatException e) {
+                        response = "Error";
+                        exchange.sendResponseHeaders(400, response.length());
+                    }
+                } else {
+                    response = "Wrong input";
+                    exchange.sendResponseHeaders(400, response.length());
+                }
+
+            } else
+                response = "Wrong input";
+            exchange.sendResponseHeaders(400, response.length());
+
         } catch (Exception e) {
             response = "Error";
             exchange.sendResponseHeaders(400, response.length());
-            e.printStackTrace();
         }
         sendResponse(exchange, response);
     }
