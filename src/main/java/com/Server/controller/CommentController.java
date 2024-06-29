@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommentController {
@@ -16,18 +17,18 @@ public class CommentController {
         this.commentDAO = new CommentDAO();
     }
 
-    public void creatComment(String commentID, String postID, String userID, String text, Date date) throws SQLException {
-        Comment comment = new Comment(commentID , postID , userID , text , date);
+    public void creatComment( String postID, String userID, String text, Date date) throws SQLException {
+        Comment comment = new Comment( postID , userID , text , date);
         commentDAO.saveComment(comment);
     }
 
-    public void updateComment(String commentID, String postID, String userID, String text, Date date) throws SQLException {
-        Comment comment = new Comment(commentID, postID, userID, text, date);
+    public void updateComment(String commentID,  String userID, String text) throws SQLException {
+        Comment comment = new Comment(commentID, userID, text);
         commentDAO.updateComment(comment);
     }
 
-    public void deleteComment(String commentID) throws SQLException {
-        commentDAO.deleteComment(commentID);
+    public void deleteComment(String commentID,String id) throws SQLException {
+        commentDAO.deleteComment(commentID , id);
     }
 
     public void deleteAll() throws SQLException {
@@ -44,5 +45,23 @@ public class CommentController {
         List<Comment> comments = commentDAO.getAll();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(comments);
+    }
+
+    public String getAllCommentsOfaPost(String post_id) throws SQLException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayList<Comment> comments = commentDAO.getAllCommentsOfaPost(post_id);
+        if (comments.isEmpty()) {
+            return null;
+        } else {
+            return objectMapper.writeValueAsString(comments);
+        }
+    }
+
+    public boolean isCommentExist(String comment_id) throws SQLException {
+        return commentDAO.isCommentExist(comment_id);
+    }
+
+    public boolean isCommentExist(String comment_id, String id) throws SQLException {
+        return commentDAO.isCommentExist(comment_id, id);
     }
 }

@@ -1,6 +1,7 @@
 package com.Server.DAO;
 
 import com.Server.model.Comment;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -37,9 +38,10 @@ public class CommentDAO {
         statement.executeUpdate();
     }
 
-    public void deleteComment(String commentID) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM comments WHERE commentID = ?");
+    public void deleteComment(String commentID , String id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM comments WHERE commentID = ?  AND user_id = ?");
         statement.setString(1, commentID);
+        statement.setString(2, id);
         statement.executeUpdate();
     }
 
@@ -76,5 +78,36 @@ public class CommentDAO {
             comments.add(comment);
         }
         return comments;
+    }
+
+    public ArrayList<Comment> getAllCommentsOfaPost (String post_id) throws SQLException, JsonProcessingException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM comments WHERE post_id = ?");
+
+        statement.setString(1, post_id);
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Comment> comments = new ArrayList<>();
+
+        while (resultSet.next()) {
+            Comment comment = new Comment(resultSet.getString("comment_id"), resultSet.getString("post_id"), resultSet.getString("user_id"), resultSet.getString("comment_text"));
+            comments.add(comment);
+        }
+
+        return comments;
+    }
+
+    public boolean isCommentExist(String comment_id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM comments WHERE comment_id = ?");
+        statement.setString(1, comment_id);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
+
+    public boolean isCommentExist(String comment_id, String id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM comments WHERE comment_id = ? AND user_id = ?");
+        statement.setString(1, comment_id);
+        statement.setString(2, id);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
     }
 }

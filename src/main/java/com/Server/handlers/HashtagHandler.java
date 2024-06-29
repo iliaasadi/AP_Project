@@ -21,47 +21,50 @@ public class HashtagHandler implements HttpHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String request = exchange.getRequestMethod();
-        String path = exchange.getRequestURI().getPath();
-        String[] pathParts = path.split("/");
+
         String response = "";
-        String id = JwtExtractor.ExtractToken(exchange);
+        String id = "";
 
         try {
+            String request = exchange.getRequestMethod();
+            String path = exchange.getRequestURI().getPath();
+            String[] pathParts = path.split("/");
+            id = JwtExtractor.ExtractToken(exchange);
             if (id == null) {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
                 return;
             }
+
+            try {
+
+                if (request.equals("GET")) {
+                    if (pathParts.length == 2) {
+                        response = hashTagController.getByHashTag(pathParts[1]);
+                        if (response == null) {
+                            response = "Wrong input";
+                            exchange.sendResponseHeaders(400, response.length());
+                        } else {
+                            exchange.sendResponseHeaders(200, response.length());
+                        }
+                    } else {
+                        response = "Wrong input";
+                        exchange.sendResponseHeaders(400, response.length());
+                    }
+                } else {
+                    response = "Invalid request";
+                    exchange.sendResponseHeaders(400, response.length());
+                }
+            } catch (SQLException | IOException e) {
+                response = "Error";
+                exchange.sendResponseHeaders(400, response.length());
+            }
         } catch (Exception e) {
             response = "Error";
             exchange.sendResponseHeaders(400, response.length());
             sendResponse(exchange, response);
             return;
-        }
-        try {
-
-            if (request.equals("GET")) {
-                if (pathParts.length == 2) {
-                    response = hashTagController.getByHashTag(pathParts[1]);
-                    if (response == null) {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    } else {
-                        exchange.sendResponseHeaders(200, response.length());
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
-            } else {
-                response = "Invalid request";
-                exchange.sendResponseHeaders(400, response.length());
-            }
-        } catch (SQLException | IOException e) {
-            response = "Error";
-            exchange.sendResponseHeaders(400, response.length());
         }
         sendResponse(exchange, response);
     }

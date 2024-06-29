@@ -1,8 +1,7 @@
 package com.Server.handlers;
 
-
 import com.Server.JWT.JwtExtractor;
-import com.Server.controller.PostController;
+import com.Server.controller.CommentController;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
@@ -14,29 +13,25 @@ import java.io.InputStreamReader;
 import java.sql.Date;
 import java.sql.SQLException;
 
-
-
-public class PostHandler implements HttpHandler {
-
+public class CommentHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        PostController postController = null;
+        CommentController commentController = null;
         try {
-            postController = new PostController();
+            commentController = new CommentController();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-
         String response = "";
         String id = "";
+
         try {
             String request = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
             String[] pathParts = path.split("/");
-
             try {
                 id = JwtExtractor.ExtractToken(exchange);
                 if (id == null) {
@@ -51,141 +46,101 @@ public class PostHandler implements HttpHandler {
                 sendResponse(exchange, response);
                 return;
             }
+
             if (request.equals("GET")) {
 
-                if (pathParts.length == 3) {
-                    if (pathParts[2].equals("all")) { // post/all
-                        response = postController.getAllPostsOfaUser(id);
+                if (pathParts.length == 3) { // comment/comment_id
+                    try {
+                        String comment_id = pathParts[2];
+                        response = commentController.getComment(comment_id);
                         if (response == null) {
                             response = "Wrong input";
                             exchange.sendResponseHeaders(400, response.length());
                         } else {
                             exchange.sendResponseHeaders(200, response.length());
                         }
-                    } else { //post/post_id
-                        try {
-                            String postId = pathParts[2];
-                            response = postController.getPost(postId);
-                            if (response != null) {
-                                exchange.sendResponseHeaders(200, response.length());
-                            } else {
-                                response = "Wrong input";
-                                exchange.sendResponseHeaders(400, response.length());
-                            }
-                        } catch (NumberFormatException e) {
-                            response = "Error";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
+                    } catch (NumberFormatException e) {
+                        response = "Error";
+                        exchange.sendResponseHeaders(400, response.length());
                     }
-                } else if (pathParts.length == 4) {
-                    if (pathParts[2].equals("all") && pathParts[3].equals("all")) { //post/all/all
-                        response = postController.getAll();
-                        if (response != null) {
+                } else if (pathParts.length == 4 && pathParts[2].equals("all")) { //comment/all/post_id
+                    try {
+                        String post_id = pathParts[3];
+                        response = commentController.getAllCommentsOfaPost(post_id);
+                        if (response == null) {
+                            response = "Wrong input";
+                            exchange.sendResponseHeaders(400, response.length());
+                        } else {
                             exchange.sendResponseHeaders(200, response.length());
+
+                        }
+                    } catch (NumberFormatException e) {
+                        response = "Error";
+                        exchange.sendResponseHeaders(400, response.length());
+                    }
+                } else {
+                    response = "Wrong input";
+                    exchange.sendResponseHeaders(400, response.length());
+                }
+
+            }
+            if (request.equals("POST")) {
+                if (pathParts.length == 3) { //comment/post_id
+                    JSONObject jsonObject = getJsonObject(exchange);
+
+                    String comment = jsonObject.getString("comment");
+                    try {
+                        String post_id = pathParts[2];
+                        commentController.creatComment(post_id, id, comment, new Date(12312321));
+                        response = "Done";
+                        exchange.sendResponseHeaders(200, response.length());
+                    } catch (NumberFormatException e) {
+                        response = "Error";
+                        exchange.sendResponseHeaders(400, response.length());
+                    }
+                } else {
+                    response = "Wrong input";
+                    exchange.sendResponseHeaders(400, response.length());
+                }
+            }
+
+            if (request.equals("DELETE")) {
+
+                if (pathParts.length == 3) { //comment/comment_id
+                    try {
+                        String comment_id = pathParts[2];
+                        if (commentController.isCommentExist(comment_id)) {
+
+                            commentController.deleteComment(comment_id, id);
+                            response = "Done";
+                            exchange.sendResponseHeaders(200, response.length());
+
                         } else {
                             response = "Wrong input";
                             exchange.sendResponseHeaders(400, response.length());
                         }
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
-            }
-            if (request.equals("POST")) {
-                if (pathParts.length == 2) {
-                    JSONObject jsonObject = getJsonObject(exchange);
-                    String message = jsonObject.getString("message");
-                    if (id != null) {
-                        /**
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         * check date
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         *
-                         */
-                        postController.creatPost(id, message, new Date(1231232321));
-                        response = "Done";
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        response = "Wrong input";
+                    } catch (NumberFormatException e) {
+                        response = "Error";
                         exchange.sendResponseHeaders(400, response.length());
                     }
                 } else {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                 }
-            }
-            if (request.equals("DELETE")) {
 
-                if (pathParts.length == 3) { //post/all or post/post_id
-                    if (pathParts[2].equals("all")) {
-                        postController.deleteAllPostsOfaUser(id);
-                        response = "Done";
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        try {
-                            String postId = (pathParts[2]);
-                            if (postController.getPost(postId) == null) {
-                                response = "Wrong input";
-                                exchange.sendResponseHeaders(400, response.length());
-                            } else {
-                                postController.deletePost(postId);
-                                response = "Done";
-                                exchange.sendResponseHeaders(200, response.length());
-                            }
-                        } catch (NumberFormatException e) {
-                            response = "Error";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
-                    }
-                } else if (pathParts.length == 4) { //post/all/all
-                    if (pathParts[2].equals("all") && pathParts[3].equals("all")) {
-                        postController.deleteAll();
-                        response = "Done";
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
             }
             if (request.equals("PUT")) {
-                if (pathParts.length == 3) { //post/post_id
+
+                if (pathParts.length == 3) { //comment/comment_id
                     JSONObject jsonObject = getJsonObject(exchange);
-                    String message = jsonObject.getString("message");
+                    String comment = jsonObject.getString("comment");
                     try {
-                        String postId = (pathParts[2]);
-                        if (postController.getPost(postId) != null) {
-                            postController.updatePost(id, postId, message);
+                        String comment_id = pathParts[2];
+                        if (commentController.isCommentExist(comment_id, id)) {
+                            commentController.updateComment(comment_id , id, comment);
                             response = "Done";
                             exchange.sendResponseHeaders(200, response.length());
+
                         } else {
                             response = "Wrong input";
                             exchange.sendResponseHeaders(400, response.length());
@@ -202,12 +157,15 @@ public class PostHandler implements HttpHandler {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
             }
+
         } catch (Exception e) {
             response = "Error";
-            exchange.sendResponseHeaders(400, response.length());
             e.printStackTrace();
+            exchange.sendResponseHeaders(400, response.length());
+        } finally {
+            sendResponse(exchange, response);
         }
-        sendResponse(exchange, response);
+
     }
 
 

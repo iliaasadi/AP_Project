@@ -9,7 +9,27 @@ public class Comment {
     private String text;
     private Date date;
 
-    public Comment(String commentID, String postID,String userID, String text, Date date) {
+    public Comment(String commentID, String userID, String text) {
+        this.commentID = commentID;
+        this.userID = userID;
+        this.text = text;
+    }
+
+    public Comment(String commentID, String postID, String userID, String text) {
+        this.commentID = commentID;
+        this.postID = postID;
+        this.userID = userID;
+        this.text = text;
+    }
+
+    public Comment(String postID, String userID, String text, Date date) {
+        this.postID = postID;
+        this.userID = userID;
+        this.text = text;
+        this.date = date;
+    }
+
+    public Comment(String commentID, String postID, String userID, String text, Date date) {
         this.commentID = commentID;
         this.postID = postID;
         this.userID = userID;
