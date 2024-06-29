@@ -40,7 +40,7 @@ public class LikeController {
      * @return
      * @throws SQLException
      */
-    public String getLikes(String Id) throws SQLException, JsonProcessingException {
+    public String getLikes(String Id) throws SQLException, JsonProcessingException { // of a person
         List<Like> likes = likeDAO.getLikes(Id);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(likes);
@@ -54,7 +54,7 @@ public class LikeController {
      * @return
      * @throws SQLException
      */
-    public String getLikers(String Id) throws SQLException, JsonProcessingException {
+    public String getLikers(String Id) throws SQLException, JsonProcessingException { //of a post
         List<Like> likes = likeDAO.getLikers(Id);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(likes);
@@ -71,5 +71,8 @@ public class LikeController {
         List<Like> likes = likeDAO.getAll();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(likes);
+    }
+    public boolean likeExists(String email, String postId) throws SQLException {
+        return likeDAO.isLiking(email, postId);
     }
 }

@@ -111,4 +111,13 @@ public class PostDAO {
 
         return posts;
     }
+    public boolean isPostExist(String postId) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM posts WHERE post_id = ?");
+
+        statement.setString(1, postId);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.next();
+    }
 }

@@ -47,7 +47,7 @@ public class LikeDAO {
      * @return id has liked what
      * @throws SQLException
      */
-    public List<Like> getLikes(String Id) throws SQLException {
+    public List<Like> getLikes(String Id) throws SQLException { // of a person
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM likes WHERE liker = ?");
         statement.setString(1, Id);
         ResultSet resultSet = statement.executeQuery();
@@ -58,6 +58,9 @@ public class LikeDAO {
             like.setLiked(resultSet.getString("liked"));
             likes.add(like);
         }
+        if (likes.isEmpty()) {
+            return null;
+        }
         return likes;
     }
 
@@ -66,7 +69,7 @@ public class LikeDAO {
      * @return what has liked id
      * @throws SQLException
      */
-    public List<Like> getLikers(String Id) throws SQLException {
+    public List<Like> getLikers(String Id) throws SQLException { // of a post
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM likes WHERE liked = ?");
         statement.setString(1, Id);
         ResultSet resultSet = statement.executeQuery();
@@ -76,6 +79,9 @@ public class LikeDAO {
             like.setLiker(resultSet.getString("liker"));
             like.setLiked(resultSet.getString("liked"));
             likes.add(like);
+        }
+        if (likes.isEmpty()) {
+            return null;
         }
         return likes;
     }
