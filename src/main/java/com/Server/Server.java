@@ -23,7 +23,7 @@ public class Server {
 //            httpServer.createContext("/job", new JobHandler());
 //            httpServer.createContext("/contact", new ContactHandler());
 //            httpServer.createContext("/skill", new SkillHandler());
-//            httpServer.createContext("/education", new EducationHandler());
+            httpServer.createContext("/education", new EducationHandler());
 //            httpServer.createContext("/block", new BlockHandler());
             httpServer.start();
         } catch (Exception e) {
