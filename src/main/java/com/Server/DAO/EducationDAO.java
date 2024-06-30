@@ -10,10 +10,12 @@ import java.util.ArrayList;
 
 public class EducationDAO {
     private final Connection connection;
+
     public EducationDAO() throws SQLException {
         connection = DataBase.getConnection();
         createEducationTable();
     }
+
     /**
      * check class """"skill"""" and relate it here !!!!!!!!!!!!!!!!!!!
      *
@@ -24,9 +26,9 @@ public class EducationDAO {
         statement.executeUpdate();
     }
 
-    public void saveEducation(Education education) throws SQLException {
+    public void saveEducation(Education education, String id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_descreption, education_description, edu_notification) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)");
-        statement.setString(1, education.getId());
+        statement.setString(1, id);
         statement.setString(2, education.getInstituteName());
         statement.setString(3, education.getFieldOfStudy());
         statement.setDate(4, education.getEducationStartDate());
@@ -34,14 +36,14 @@ public class EducationDAO {
         statement.setFloat(6, education.getGrade());
         statement.setString(7, education.getEducationalActivitiesDescription());
         statement.setString(8, education.getEducationalDescription());
-        statement.setString(9,education.getEduNotification());
+        statement.setString(9, education.getEduNotification());
 
         statement.executeUpdate();
     }
 
-    public void deleteEducation(Education education) throws SQLException {
+    public void deleteEducation( String id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("DELETE FROM educations WHERE id = ?");
-        statement.setString(1, education.getId());
+        statement.setString(1, id);
         statement.executeUpdate();
     }
 
@@ -50,7 +52,18 @@ public class EducationDAO {
         statement.executeUpdate();
     }
 
-    public void updateEducation(Education education) throws SQLException {
+    public void deleteEducation(String id, String institute) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM education WHERE id = ? AND institute = ?");
+
+        statement.setString(1, id);
+        statement.setString(2, institute);
+
+        statement.executeUpdate();
+    }
+
+
+
+    public void updateEducation(Education education, String id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ?,edu_notification =? WHERE id = ?");
         statement.setString(1, education.getInstituteName());
         statement.setString(2, education.getFieldOfStudy());
@@ -59,8 +72,8 @@ public class EducationDAO {
         statement.setFloat(5, education.getGrade());
         statement.setString(6, education.getEducationalActivitiesDescription());
         statement.setString(7, education.getEducationalDescription());
-        statement.setString(8,education.getEduNotification());
-        statement.setString(9,education.getId());
+        statement.setString(8, education.getEduNotification());
+        statement.setString(9, id);
 
 
         statement.executeUpdate();
@@ -89,13 +102,61 @@ public class EducationDAO {
         return null;
     }
 
-    public ArrayList<Education> getEducations() throws SQLException {
+    public Education getEducation(String userId , String institute) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE id = ? AND institute = ?");
+        statement.setString(1, userId);
+        statement.setString(2, institute);
+        ResultSet resultSet = statement.executeQuery();
+        Education education = new Education();
+
+        if (resultSet.next()) {
+            education.setId(resultSet.getString("id"));
+            education.setInstituteName(resultSet.getString("institute"));
+            education.setFieldOfStudy(resultSet.getString("field_study"));
+            education.setEducationStartDate(resultSet.getDate("start_date"));
+            education.setEducationFinishDate(resultSet.getDate("finish_date"));
+            education.setGrade(resultSet.getFloat("grade"));
+            education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
+            education.setEducationalDescription(resultSet.getString("education_description"));
+            education.setEduNotification("edu_notification");
+
+            return education;
+        }
+
+        return null;
+    }
+
+    public ArrayList<Education> getEducations() throws SQLException { //ALL IN UNIVERSAL
         ArrayList<Education> educations = new ArrayList<Education>();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
             Education education = new Education();
+            education.setId(resultSet.getString("id"));
+            education.setInstituteName(resultSet.getString("institute"));
+            education.setFieldOfStudy(resultSet.getString("field_study"));
+            education.setEducationStartDate(resultSet.getDate("start_date"));
+            education.setEducationFinishDate(resultSet.getDate("finish_date"));
+            education.setGrade(resultSet.getFloat("grade"));
+            education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
+            education.setEducationalDescription(resultSet.getString("education_description"));
+            education.setEduNotification(resultSet.getString("edu_notification"));
+
+            educations.add(education);
+        }
+
+        return educations;
+    }
+
+    public ArrayList<Education> getEducations(String id) throws SQLException { // ALL OF A PERSON
+        ArrayList<Education> educations = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE id = ?");
+        statement.setString(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        Education education = new Education();
+        while (resultSet.next()) {
+
             education.setId(resultSet.getString("id"));
             education.setInstituteName(resultSet.getString("institute"));
             education.setFieldOfStudy(resultSet.getString("field_study"));
