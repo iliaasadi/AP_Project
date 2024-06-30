@@ -19,11 +19,11 @@ public class Server {
             httpServer.createContext("/follow", new FollowHandler());
             httpServer.createContext("/hashtag", new HashtagHandler());
             httpServer.createContext("/direct", new DirectHandler());
+            httpServer.createContext("/contact", new ContactHandler());
+            httpServer.createContext("/education", new EducationHandler());
 //            httpServer.createContext("/connection", new ConnectionHandler());
 //            httpServer.createContext("/job", new JobHandler());
-//            httpServer.createContext("/contact", new ContactHandler());
 //            httpServer.createContext("/skill", new SkillHandler());
-            httpServer.createContext("/education", new EducationHandler());
 //            httpServer.createContext("/block", new BlockHandler());
             httpServer.start();
         } catch (Exception e) {
