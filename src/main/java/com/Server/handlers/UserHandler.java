@@ -26,7 +26,7 @@ public class UserHandler implements HttpHandler {
                         body.append(line);
                     }
                     JSONObject jsonObject = new JSONObject(body.toString());
-                    if (userController.isUserExist(jsonObject.getString("email"))) {
+                    if ((userController.isUserExist(jsonObject.getString("id")))) {
                         exchange.sendResponseHeaders(400, "DUPLICATE".length());
                         OutputStream outputStream = exchange.getResponseBody();
                         outputStream.write("DUPLICATE".getBytes());

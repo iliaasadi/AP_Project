@@ -94,9 +94,9 @@ public class UserDAO {
         return null;
     }
 
-    public boolean isUserExist(String email) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?");
-        statement.setString(1, email);
+    public boolean isUserExist(String id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE id = ?");
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
 
         return resultSet.next();
