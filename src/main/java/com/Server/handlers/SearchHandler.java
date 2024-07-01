@@ -23,16 +23,16 @@ public class SearchHandler implements HttpHandler {
                     response = searchController.searchUser(search);
                     exchange.sendResponseHeaders(200, response.length());
                 } else {
-                    response = "Wrong Command";
-                    exchange.sendResponseHeaders(404, response.length());
+                    response = "Wrong input";
+                    exchange.sendResponseHeaders(400, response.length());
                 }
             } else {
-                response = "Wrong command";
+                response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
             }
         } catch (SQLException e) {
-            response = "Wrong Command";
-            exchange.sendResponseHeaders(404, response.length());
+            response = "Error";
+            exchange.sendResponseHeaders(400, response.length());
             throw new RuntimeException(e);
         }
         OutputStream outputStream = exchange.getResponseBody();
