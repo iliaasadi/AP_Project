@@ -100,6 +100,12 @@ public class UserDAO {
         ResultSet resultSet = statement.executeQuery();
 
         return resultSet.next();
+    }public boolean isUserExistByEmail(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?");
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.next();
     }
 
 
@@ -114,6 +120,26 @@ public class UserDAO {
     public User getUser(String userID, String userPass) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ? AND password = ?");
         statement.setString(1, userID);
+        statement.setString(2, userPass);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            User user = new User();
+            user.setID(resultSet.getString("id"));
+            user.setFirstName(resultSet.getString("first_name"));
+            user.setLastName(resultSet.getString("last_name"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPassWord(resultSet.getString("password"));
+            user.setAdditionalName(resultSet.getString("additional_name"));
+            user.setCity(resultSet.getString("city"));
+            user.setCountry(resultSet.getString("country"));
+            user.setJoinDate(resultSet.getDate("join_date"));
+            user.setWorkType(resultSet.getString("work_type"));
+            return user;
+        }
+        return null;
+    }public User getUserByEmail(String email, String userPass) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
+        statement.setString(1, email);
         statement.setString(2, userPass);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
