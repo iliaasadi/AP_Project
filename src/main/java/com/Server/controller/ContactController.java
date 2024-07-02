@@ -16,12 +16,12 @@ public class ContactController {
         this.contactDAO = new ContactDAO();
     }
 
-    public void creatContact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
+    public void creatContact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, String birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
         Contact contact = new Contact(ID , profileURL , shareEmail , phoneNumber , numberType , birthdate , address , birthdayPolicy , instantMassaging);
         contactDAO.saveContact(contact);
     }
 
-    public void updateContact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
+    public void updateContact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, String birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
         Contact contact = new Contact(ID, profileURL, shareEmail, phoneNumber, numberType, birthdate, address, birthdayPolicy, instantMassaging);
         contactDAO.updateContacts(contact);
     }

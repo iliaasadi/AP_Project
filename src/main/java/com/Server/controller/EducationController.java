@@ -18,12 +18,12 @@ public class EducationController {
         this.educationDAO = new EducationDAO();
     }
 
-    public void creatEducation(String Id, String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) throws SQLException {
+    public void creatEducation(String Id, String instituteName, String fieldOfStudy, String educationStartDate, String educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) throws SQLException {
         Education education = new Education(Id, instituteName, fieldOfStudy, educationStartDate, educationFinishDate, grade, educationalActivitiesDescription, educationalDescription, educationalSkills, notificationEduStr);
         educationDAO.saveEducation(education, Id);
     }
 
-    public void updateEducation(String Id, String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) throws SQLException {
+    public void updateEducation(String Id, String instituteName, String fieldOfStudy, String educationStartDate, String educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) throws SQLException {
         Education education = new Education(Id, instituteName, fieldOfStudy, educationStartDate, educationFinishDate, grade, educationalActivitiesDescription, educationalDescription, educationalSkills, notificationEduStr);
         educationDAO.updateEducation(education, Id);
     }

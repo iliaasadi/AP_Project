@@ -26,7 +26,7 @@ public class ContactDAO {
         statement.setString(3, contact.getShareEmail());
         statement.setString(4, contact.getPhoneNumber());
         statement.setString(5, contact.getNumberType());
-        statement.setDate(6, contact.getBirthdate());
+        statement.setString(6, contact.getBirthdate());
         statement.setString(7, contact.getBirthdayPolicy());
         statement.setString(8, contact.getAddress());
         statement.setString(9, contact.getInstantMassaging());
@@ -50,7 +50,7 @@ public class ContactDAO {
         statement.setString(1, contact.getShareEmail());
         statement.setString(2, contact.getPhoneNumber());
         statement.setString(3, contact.getNumberType());
-        statement.setDate(4, contact.getBirthdate());
+        statement.setString(4, contact.getBirthdate());
         statement.setString(5, contact.getBirthdayPolicy());
         statement.setString(6, contact.getAddress());
         statement.setString(7, contact.getInstantMassaging());
@@ -70,7 +70,7 @@ public class ContactDAO {
             contact.setShareEmail(resultSet.getString("email"));
             contact.setPhoneNumber(resultSet.getString("phone_number"));
             contact.setNumberType(resultSet.getString("phone_type"));
-            contact.setBirthdate(resultSet.getDate("birth_day"));
+            contact.setBirthdate(resultSet.getString("birth_day"));
             contact.setBirthdayPolicy(resultSet.getString("birthday_policy"));
             contact.setAddress(resultSet.getString("address"));
             contact.setInstantMassaging(resultSet.getString("instant_message"));
@@ -92,7 +92,7 @@ public class ContactDAO {
             contact.setShareEmail(resultSet.getString("email"));
             contact.setPhoneNumber(resultSet.getString("phone_number"));
             contact.setNumberType(resultSet.getString("phone_type"));
-            contact.setBirthdate(resultSet.getDate("birth_day"));
+            contact.setBirthdate(resultSet.getString("birth_day"));
             contact.setBirthdayPolicy(resultSet.getString("birthday_policy"));
             contact.setAddress(resultSet.getString("address"));
             contact.setInstantMassaging(resultSet.getString("instant_message"));

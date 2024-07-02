@@ -91,7 +91,7 @@ public class ContactHandler implements HttpHandler {
                                 jsonObject.getString("email"),
                                 jsonObject.getString("phone_number"),
                                 jsonObject.getString("phone_type"),
-                                new Date(jsonObject.getLong("birth_date")),
+                                jsonObject.getString("birth_date"),
                                 jsonObject.getString("address"),
                                 jsonObject.getString("birthday_policy"),
                                 jsonObject.getString("instant_message")
@@ -140,7 +140,7 @@ public class ContactHandler implements HttpHandler {
                                     jsonObject.getString("email"),
                                     jsonObject.getString("phone_number"),
                                     jsonObject.getString("phone_type"),
-                                    new Date(jsonObject.getLong("birth_date")),
+                                    jsonObject.getString("birth_date"),
                                     jsonObject.getString("address"),
                                     jsonObject.getString("birthday_policy"),
                                     jsonObject.getString("instant_message")

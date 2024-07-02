@@ -19,7 +19,7 @@ public class Contact {
 
 
     private phoneType numberType;
-    private Date birthdate;
+    private String birthdate;
     private String address;
 
     enum notification {
@@ -35,7 +35,7 @@ public class Contact {
      */
     private String instantMassaging;
 
-    public Contact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String address, String birthdayPolicy, String instantMassaging) {
+    public Contact(String ID, String profileURL, String shareEmail, String phoneNumber, String numberType, String birthdate, String address, String birthdayPolicy, String instantMassaging) {
         this.ID = ID;
         this.profileURL = profileURL;
         this.shareEmail = shareEmail;
@@ -99,11 +99,11 @@ public class Contact {
         }
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

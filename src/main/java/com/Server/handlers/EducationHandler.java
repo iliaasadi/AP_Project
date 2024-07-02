@@ -105,8 +105,8 @@ public class EducationHandler implements HttpHandler {
                                         jsonObject.getString("id"),
                                         jsonObject.getString("institute"),
                                         jsonObject.getString("field_study"),
-                                        new Date(jsonObject.getLong("start_date")),
-                                        new Date(jsonObject.getLong("finish_date")),
+                                        jsonObject.getString("start_date"),
+                                        jsonObject.getString("finish_date"),
                                         jsonObject.getFloat("grade"),
                                         jsonObject.getString("activity_description"),
                                         jsonObject.getString("education_description"),
@@ -120,7 +120,7 @@ public class EducationHandler implements HttpHandler {
                             }
                         }
                     } else {
-                        response = "Wrong inputt";
+                        response = "Wrong input";
                         exchange.sendResponseHeaders(400, response.length());
                     }
 
@@ -181,8 +181,8 @@ public class EducationHandler implements HttpHandler {
                                         jsonObject.getString("id"),
                                         jsonObject.getString("institute"),
                                         jsonObject.getString("field_study"),
-                                        new Date(jsonObject.getLong("start_date")),
-                                        new Date(jsonObject.getLong("finish_date")),
+                                        jsonObject.getString("start_date"),
+                                        jsonObject.getString("finish_date"),
                                         jsonObject.getFloat("grade"),
                                         jsonObject.getString("activity_description"),
                                         jsonObject.getString("education_description"),
