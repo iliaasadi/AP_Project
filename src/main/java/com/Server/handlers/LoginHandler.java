@@ -19,16 +19,51 @@ public class LoginHandler implements HttpHandler {
             String[] paths = exchange.getRequestURI().getPath().split("/");
             String request = exchange.getRequestMethod();
             if (request.equals("GET")) {
-                if (paths.length == 4) {
+                if ((paths.length == 4) && (!(paths[2].contains("@")))) {
                     response = userController.getUserByIdAndPass(paths[2], paths[3]);
-                    if (response != null) {
-                        response = JwtBuilder.MakeToken(paths[2]);
+                       if (!userController.isUserExist(paths[2])) {
+                        response = "Invalid username";
+                        exchange.sendResponseHeaders(402, response.length());
+                        return;
+                    }else if (userController.isUserExist(paths[2]) && (response == null)) {
+                        response = "Wrong password";
+                        exchange.sendResponseHeaders(401, response.length());
+                        return;
                     }
-                    exchange.sendResponseHeaders(200, response.length());
+                    else if (response != null) {
+                        response = JwtBuilder.MakeToken(paths[2]);
+                        exchange.sendResponseHeaders(200, response.length());
+                        return;
+                    }else {
+                        response = "Error";
+                        exchange.sendResponseHeaders(400, response.length());
+                        return;
+                    }
+
+                }else if ((paths.length == 4) && (paths[2].contains("@"))) {
+                    response = userController.getUserByEmailAndPass(paths[2], paths[3]);
+                       if (!userController.isEmailExist(paths[2])) {
+                        response = "Invalid email";
+                        exchange.sendResponseHeaders(402, response.length());
+                        return;
+                    }else if (userController.isEmailExist(paths[2]) && (response == null)) {
+                        response = "Wrong password";
+                        exchange.sendResponseHeaders(401, response.length());
+                        return;
+                    }
+                    else if (response != null) {
+                        response = JwtBuilder.MakeToken(paths[2]);
+                        exchange.sendResponseHeaders(200, response.length());
+                        return;
+                    }else {
+                        response = "Error";
+                        exchange.sendResponseHeaders(400, response.length());
+                        return;
+                    }
 
                 }
             } else {
-                response = "invalid method";
+                response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
             }
 

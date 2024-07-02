@@ -145,9 +145,18 @@ public class UserController {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(user);
     }
+    public String getUserByEmailAndPass(String email, String pass) throws SQLException, JsonProcessingException {
+        User user = userDAO.getUserByEmail(email, pass);
+        if (user == null) return null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(user);
+    }
 
     public boolean isUserExist(String id) throws SQLException {
         return userDAO.isUserExist(id);
+    }
+    public boolean isEmailExist(String email) throws SQLException {
+        return userDAO.isUserExistByEmail(email);
     }
 
 
