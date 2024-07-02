@@ -32,7 +32,7 @@ public class UserDAO {
         statement.setString(6, user.getAdditionalName());
         statement.setString(7, user.getCity());
         statement.setString(8, user.getCountry());
-        statement.setDate(9, user.getJoinDate());
+        statement.setString(9, user.getJoinDate());
         statement.setString(10, user.getWorkType());
 
         statement.executeUpdate();
@@ -87,7 +87,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
-            user.setJoinDate(resultSet.getDate("join_date"));
+            user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             return user;
         }
@@ -132,7 +132,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
-            user.setJoinDate(resultSet.getDate("join_date"));
+            user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             return user;
         }
@@ -152,7 +152,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
-            user.setJoinDate(resultSet.getDate("join_date"));
+            user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             return user;
         }
@@ -173,7 +173,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
-            user.setJoinDate(resultSet.getDate("join_date"));
+            user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             users.add(user);
         }

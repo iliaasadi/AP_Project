@@ -7,8 +7,8 @@ public class Education {
     private String Id;
     private String instituteName;
     private String fieldOfStudy;
-    private Date educationStartDate;
-    private Date educationFinishDate;
+    private String educationStartDate;
+    private String educationFinishDate;
     private float grade;
 
     // ""shrhe faaliat"" va ""anjoman""  fargh darad ba ""tozihat"" 2ta field jodan
@@ -21,7 +21,7 @@ public class Education {
         EVERYONE
     }
     private notification eduNotification;
-    public Education(String Id, String instituteName, String fieldOfStudy, Date educationStartDate, Date educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) {
+    public Education(String Id, String instituteName, String fieldOfStudy, String educationStartDate, String educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) {
         this.Id = Id;
         this.instituteName = instituteName;
         this.fieldOfStudy = fieldOfStudy;
@@ -65,19 +65,19 @@ public class Education {
         this.fieldOfStudy = fieldOfStudy;
     }
 
-    public Date getEducationStartDate() {
+    public String getEducationStartDate() {
         return educationStartDate;
     }
 
-    public void setEducationStartDate(Date educationStartDate) {
+    public void setEducationStartDate(String educationStartDate) {
         this.educationStartDate = educationStartDate;
     }
 
-    public Date getEducationFinishDate() {
+    public String getEducationFinishDate() {
         return educationFinishDate;
     }
 
-    public void setEducationFinishDate(Date educationFinishDate) {
+    public void setEducationFinishDate(String educationFinishDate) {
         this.educationFinishDate = educationFinishDate;
     }
 

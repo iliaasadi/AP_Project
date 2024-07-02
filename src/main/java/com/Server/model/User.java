@@ -16,7 +16,7 @@ public class User {
     private String country;
     private String city;
     private String profession;
-    private Date joinDate;
+    private String joinDate;
 
     enum Work_Type{
         WANT_TO_HIRED,
@@ -26,7 +26,7 @@ public class User {
     private Work_Type workType;
 
 
-    public User(String ID, String email, String firstName, String lastName, String passWord,String additionalName, Date joinDate, String workType) {
+    public User(String ID, String email, String firstName, String lastName, String passWord,String additionalName, String joinDate, String workType) {
 
         this.ID = ID;
         this.email = email;
@@ -122,11 +122,11 @@ public class User {
         this.additionalName = additionalName;
     }
 
-    public Date getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 

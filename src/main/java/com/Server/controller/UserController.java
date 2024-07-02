@@ -19,7 +19,7 @@ public class UserController {
         userDAO = new UserDAO();
     }
 
-    public void createUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, Date joinDate, String workType) throws SQLException {
+    public void createUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, String joinDate, String workType) throws SQLException {
         User user = new User(id, email , firstName , lastName , passWord ,additionalName, joinDate , workType );
         if (isUserExists(id))
             userDAO.updateUser(user);
@@ -27,7 +27,7 @@ public class UserController {
             userDAO.saveUser(user);
     }
 
-    public void creatContact(String userId, String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
+    public void creatContact(String userId, String profileURL, String shareEmail, String phoneNumber, String numberType, String birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
         Contact contact = new Contact(userId , profileURL , shareEmail , phoneNumber , numberType , birthdate , address,birthdayPolicy , instantMassaging);
         if (userDAO.getUser(userId) == null) throw new SQLException("User does not exist");
         if (contactDAO.getContact(userId) == null) {
@@ -54,12 +54,12 @@ public class UserController {
         contactDAO.deleteContacts();
     }
 
-    public void updateUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, Date joinDate, String workType) throws SQLException {
+    public void updateUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, String joinDate, String workType) throws SQLException {
         User user = new User(id, email, firstName, lastName, passWord,additionalName, joinDate, workType);
         userDAO.updateUser(user);
     }
 
-    public void updateContact(String userId, String profileURL, String shareEmail, String phoneNumber, String numberType, Date birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
+    public void updateContact(String userId, String profileURL, String shareEmail, String phoneNumber, String numberType, String birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
         Contact contact = new Contact(userId, profileURL, shareEmail, phoneNumber, numberType, birthdate, address, birthdayPolicy, instantMassaging);
         contactDAO.updateContacts(contact);
     }

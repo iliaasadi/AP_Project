@@ -31,8 +31,8 @@ public class EducationDAO {
         statement.setString(1, id);
         statement.setString(2, education.getInstituteName());
         statement.setString(3, education.getFieldOfStudy());
-        statement.setDate(4, education.getEducationStartDate());
-        statement.setDate(5, education.getEducationFinishDate());
+        statement.setString(4, education.getEducationStartDate());
+        statement.setString(5, education.getEducationFinishDate());
         statement.setFloat(6, education.getGrade());
         statement.setString(7, education.getEducationalActivitiesDescription());
         statement.setString(8, education.getEducationalDescription());
@@ -67,8 +67,8 @@ public class EducationDAO {
         PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ?,edu_notification =? WHERE id = ?");
         statement.setString(1, education.getInstituteName());
         statement.setString(2, education.getFieldOfStudy());
-        statement.setDate(3, education.getEducationStartDate());
-        statement.setDate(4, education.getEducationFinishDate());
+        statement.setString(3, education.getEducationStartDate());
+        statement.setString(4, education.getEducationFinishDate());
         statement.setFloat(5, education.getGrade());
         statement.setString(6, education.getEducationalActivitiesDescription());
         statement.setString(7, education.getEducationalDescription());
@@ -89,8 +89,8 @@ public class EducationDAO {
             education.setId(resultSet.getString("id"));
             education.setInstituteName(resultSet.getString("institute"));
             education.setFieldOfStudy(resultSet.getString("field_study"));
-            education.setEducationStartDate(resultSet.getDate("start_date"));
-            education.setEducationFinishDate(resultSet.getDate("finish_date"));
+            education.setEducationStartDate(resultSet.getString("start_date"));
+            education.setEducationFinishDate(resultSet.getString("finish_date"));
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
@@ -113,8 +113,8 @@ public class EducationDAO {
             education.setId(resultSet.getString("id"));
             education.setInstituteName(resultSet.getString("institute"));
             education.setFieldOfStudy(resultSet.getString("field_study"));
-            education.setEducationStartDate(resultSet.getDate("start_date"));
-            education.setEducationFinishDate(resultSet.getDate("finish_date"));
+            education.setEducationStartDate(resultSet.getString("start_date"));
+            education.setEducationFinishDate(resultSet.getString("finish_date"));
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
@@ -136,8 +136,8 @@ public class EducationDAO {
             education.setId(resultSet.getString("id"));
             education.setInstituteName(resultSet.getString("institute"));
             education.setFieldOfStudy(resultSet.getString("field_study"));
-            education.setEducationStartDate(resultSet.getDate("start_date"));
-            education.setEducationFinishDate(resultSet.getDate("finish_date"));
+            education.setEducationStartDate(resultSet.getString("start_date"));
+            education.setEducationFinishDate(resultSet.getString("finish_date"));
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
@@ -160,8 +160,8 @@ public class EducationDAO {
             education.setId(resultSet.getString("id"));
             education.setInstituteName(resultSet.getString("institute"));
             education.setFieldOfStudy(resultSet.getString("field_study"));
-            education.setEducationStartDate(resultSet.getDate("start_date"));
-            education.setEducationFinishDate(resultSet.getDate("finish_date"));
+            education.setEducationStartDate(resultSet.getString("start_date"));
+            education.setEducationFinishDate(resultSet.getString("finish_date"));
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
