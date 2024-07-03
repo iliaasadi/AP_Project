@@ -39,7 +39,7 @@ public class ContactHandler implements HttpHandler {
                 }
             } catch (Exception e) {
                 response = "Error";
-                exchange.sendResponseHeaders(400, response.length());
+                exchange.sendResponseHeaders(404, response.length());
                 sendResponse(exchange, response);
                 return;
             }
@@ -74,8 +74,8 @@ public class ContactHandler implements HttpHandler {
 
 
             }
-            if (request.equals("POST")) {
-                if (pathParts.length == 2) {
+            if (pathParts[2].equals("edit")){
+                if (pathParts.length == 3) {
 
                     JSONObject jsonObject = getJsonObject(exchange);
 
@@ -163,7 +163,7 @@ public class ContactHandler implements HttpHandler {
             }
         } catch (Exception e) {
             response = "Error";
-            exchange.sendResponseHeaders(400, response.length());
+            exchange.sendResponseHeaders(404, response.length());
             e.printStackTrace();
         }
         sendResponse(exchange, response);
