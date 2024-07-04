@@ -1,17 +1,16 @@
 package com.Server.handlers;
 
 
+import com.Server.JWT.JwtBuilder;
 import com.Server.JWT.JwtExtractor;
 import com.Server.controller.ContactController;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -35,138 +34,95 @@ public class ContactHandler implements HttpHandler {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                     sendResponse(exchange, response);
-                    return;
+
                 }
             } catch (Exception e) {
                 response = "Error";
                 exchange.sendResponseHeaders(404, response.length());
                 sendResponse(exchange, response);
-                return;
+
             }
-            if (request.equals("GET")) {
-                if (pathParts.length == 3) {
-                    if (pathParts[2].equals("all")) { // contact/all
-                        response = contactController.getAll();
+            if (pathParts[2].equals("view")) {
+
+                if (id != null) {
+                    response = contactController.getContact(id);
+                    if (response == null) {
+                        response = "Wrong input";
+                        exchange.sendResponseHeaders(400, response.length());
+                    } else {
+
+                        Headers responseHeaders = exchange.getResponseHeaders();
+                        responseHeaders.add("LKN", id); // Add LKN to response headers
                         exchange.sendResponseHeaders(200, response.length());
-                    } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-                } else if (pathParts.length == 2) {
 
-                    if (id != null) {
-                        response = contactController.getContact(id);
-                        if (response == null) {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        } else {
-                            exchange.sendResponseHeaders(200, response.length());
-
-                        }
-                    } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
+                        sendResponse(exchange, response);
                     }
                 } else {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                 }
-
-
             }
-            if (pathParts[2].equals("edit")){
+            if (pathParts[2].equals("edit")) {
                 if (pathParts.length == 3) {
 
-                    JSONObject jsonObject = getJsonObject(exchange);
+                    JSONObject json = getJsonObject(exchange);
 
-                    if (!isValidJson(jsonObject)) {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
+                    if (!isValidJson(json)) {
+                        response = "Wrong JSON";
+                        exchange.sendResponseHeaders(401, response.length());
 
-                    if (id != null) {
+                    } else if (id != null && contactController.getContact(id) == null) {
+                        System.out.println(123);
                         contactController.creatContact(
-                                jsonObject.getString("id"),
-                                jsonObject.getString("profile_url"),
-                                jsonObject.getString("email"),
-                                jsonObject.getString("phone_number"),
-                                jsonObject.getString("phone_type"),
-                                jsonObject.getString("birth_date"),
-                                jsonObject.getString("address"),
-                                jsonObject.getString("birthday_policy"),
-                                jsonObject.getString("instant_message")
+                                json.getString("id"),
+                                json.getString("profile_url"),
+                                json.getString("email"),
+                                json.getString("phone_number"),
+                                json.getString("phone_type"),
+                                (String) json.get("birth_date"),
+                                json.getString("address"),
+                                json.getString("birthday_policy"),
+                                json.getString("instant_message")
                         );
-
                         response = "Done";
                         exchange.sendResponseHeaders(200, response.length());
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
-            }
-            if (request.equals("DELETE")) {
-                if (pathParts.length == 2) {
+                        sendResponse(exchange, response);
 
-                    if (id == null) {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    } else {
-                        contactController.deleteContactByID(id);
+                        return;
+                    }else if (id != null) {
+                        contactController.updateContact(
+                                json.getString("id"),
+                                json.getString("profile_url"),
+                                json.getString("email"),
+                                json.getString("phone_number"),
+                                json.getString("phone_type"),
+                                json.getString("birth_date"),
+                                json.getString("address"),
+                                json.getString("birthday_policy"),
+                                json.getString("instant_message")
+                        );
                         response = "Done";
                         exchange.sendResponseHeaders(200, response.length());
+                        sendResponse(exchange, response);
+
+                        return;
                     }
                 } else {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
+                    sendResponse(exchange, response);
                 }
-            }
-            if (request.equals("PUT")) {
-                if (pathParts.length == 2) {
-                    JSONObject jsonObject = getJsonObject(exchange);
-
-                    if (!isValidJson(jsonObject)) {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-                    if (id == null) {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    } else {
-                        if (id != null) {
-                            contactController.updateContact(
-                                    jsonObject.getString("id"),
-                                    jsonObject.getString("profile_url"),
-                                    jsonObject.getString("email"),
-                                    jsonObject.getString("phone_number"),
-                                    jsonObject.getString("phone_type"),
-                                    jsonObject.getString("birth_date"),
-                                    jsonObject.getString("address"),
-                                    jsonObject.getString("birthday_policy"),
-                                    jsonObject.getString("instant_message")
-                            );
-                            response = "Done";
-                            exchange.sendResponseHeaders(200, response.length());
-                        } else {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
-                    }
-                } else {
-                    response = "Wrong input";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
-
             } else {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
             }
         } catch (Exception e) {
+            System.out.println("sdgfdfg354");
             response = "Error";
             exchange.sendResponseHeaders(404, response.length());
             e.printStackTrace();
         }
-        sendResponse(exchange, response);
+//        sendResponse(exchange, response);
 
     }
 
@@ -184,12 +140,13 @@ public class ContactHandler implements HttpHandler {
     }
 
     private boolean isValidJson(JSONObject jsonObject) {
-        return jsonObject.has("id") && jsonObject.has("profile_url") && jsonObject.has("email") && jsonObject.has("phone_number") && jsonObject.has("phone_type") && jsonObject.has("birth_date")&& jsonObject.has("address")&& jsonObject.has("birthday_policy")&& jsonObject.has("instant_message");
+        return jsonObject.has("id") && jsonObject.has("profile_url") && jsonObject.has("email") && jsonObject.has("phone_number") && jsonObject.has("phone_type") && jsonObject.has("birth_date") && jsonObject.has("address") && jsonObject.has("birthday_policy") && jsonObject.has("instant_message");
     }
 
     private void sendResponse(HttpExchange exchange, String response) throws IOException {
-        exchange.getResponseBody().write(response.getBytes());
-        exchange.getResponseBody().close();
-        exchange.sendResponseHeaders(200, response.length());
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(response.getBytes());
+        }
+        exchange.close();
     }
 }

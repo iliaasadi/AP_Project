@@ -20,7 +20,7 @@ public class ContactDAO {
     }
 
     public void saveContact(Contact contact) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO contacs (id , profile_url , email , phone_number , phone_type ,birth_date , birthday_policy , address , instant_message ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO contacts (id , profile_url , email , phone_number , phone_type ,birth_date , birthday_policy , address , instant_message ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, contact.getID());
         statement.setString(2, contact.getProfileURL());
         statement.setString(3, contact.getShareEmail());
@@ -46,7 +46,7 @@ public class ContactDAO {
     }
 
     public void updateContacts(Contact contact) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE contacts SET email = ? , phone_number = ? , phone_type = ? , birth_date = ? , birthday_policy = ? , address = ? , instant_message = ? WHERE user_id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE contacts SET email = ? , phone_number = ? , phone_type = ? , birth_date = ? , birthday_policy = ? , address = ? , instant_message = ? WHERE id = ?");
         statement.setString(1, contact.getShareEmail());
         statement.setString(2, contact.getPhoneNumber());
         statement.setString(3, contact.getNumberType());
@@ -59,7 +59,7 @@ public class ContactDAO {
     }
 
     public Contact getContact(String userId) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM contacts WHERE user_id = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM contacts WHERE id = ?");
         statement.setString(1, userId);
         ResultSet resultSet = statement.executeQuery();
 
@@ -70,7 +70,7 @@ public class ContactDAO {
             contact.setShareEmail(resultSet.getString("email"));
             contact.setPhoneNumber(resultSet.getString("phone_number"));
             contact.setNumberType(resultSet.getString("phone_type"));
-            contact.setBirthdate(resultSet.getString("birth_day"));
+            contact.setBirthdate(String.valueOf(resultSet.getDate("birth_day")));
             contact.setBirthdayPolicy(resultSet.getString("birthday_policy"));
             contact.setAddress(resultSet.getString("address"));
             contact.setInstantMassaging(resultSet.getString("instant_message"));
