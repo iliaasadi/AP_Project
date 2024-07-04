@@ -12,7 +12,7 @@ public class JwtExtractor {
     private static final Key key = Keys.hmacShaKeyFor("iliaAsadiBahramEmami12345678987654321".getBytes(StandardCharsets.UTF_8));
     public static String ExtractToken(HttpExchange exchange) {
         try {
-            String token = exchange.getRequestHeaders().get("JWT").get(0);
+            String token = exchange.getRequestHeaders().get("LKN").get(0);
             return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
