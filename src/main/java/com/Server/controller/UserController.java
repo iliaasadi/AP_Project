@@ -14,13 +14,14 @@ import java.util.ArrayList;
 public class UserController {
     private final ContactDAO contactDAO;
     private final UserDAO userDAO;
+
     public UserController() throws SQLException {
         contactDAO = new ContactDAO();
         userDAO = new UserDAO();
     }
 
-    public void createUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, String joinDate, String workType) throws SQLException {
-        User user = new User(id, email , firstName , lastName , passWord ,additionalName, joinDate , workType );
+    public void createUser(String id, String email, String firstName, String lastName, String passWord, String additionalName, String joinDate, String workType) throws SQLException {
+        User user = new User(id, email, firstName, lastName, passWord, additionalName, joinDate, workType);
         if (isUserExists(id))
             userDAO.updateUser(user);
         else
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     public void creatContact(String userId, String profileURL, String shareEmail, String phoneNumber, String numberType, String birthdate, String address, String birthdayPolicy, String instantMassaging) throws SQLException {
-        Contact contact = new Contact(userId , profileURL , shareEmail , phoneNumber , numberType , birthdate , address,birthdayPolicy , instantMassaging);
+        Contact contact = new Contact(userId, profileURL, shareEmail, phoneNumber, numberType, birthdate, address, birthdayPolicy, instantMassaging);
         if (userDAO.getUser(userId) == null) throw new SQLException("User does not exist");
         if (contactDAO.getContact(userId) == null) {
             contactDAO.saveContact(contact);
@@ -54,8 +55,8 @@ public class UserController {
         contactDAO.deleteContacts();
     }
 
-    public void updateUser(String id, String email, String firstName, String lastName, String passWord,String additionalName, String joinDate, String workType) throws SQLException {
-        User user = new User(id, email, firstName, lastName, passWord,additionalName, joinDate, workType);
+    public void updateUser(String id, String email, String firstName, String lastName, String passWord, String additionalName, String city, String country, String profession ,String workType) throws SQLException {
+        User user = new User(id, email, firstName, lastName, passWord, additionalName, city, country, profession,workType);
         userDAO.updateUser(user);
     }
 
@@ -75,8 +76,8 @@ public class UserController {
 
 
     /**
-     *
      * json
+     *
      * @param id
      * @return
      * @throws SQLException
@@ -91,8 +92,8 @@ public class UserController {
 
 
     /**
-     *
      * json
+     *
      * @param userId
      * @return
      * @throws SQLException
@@ -105,8 +106,8 @@ public class UserController {
     }
 
     /**
-     *
      * json
+     *
      * @return
      * @throws SQLException
      */
@@ -120,8 +121,8 @@ public class UserController {
 
 
     /**
-     *
      * json
+     *
      * @return
      * @throws SQLException
      */
@@ -134,6 +135,7 @@ public class UserController {
 
     /**
      * json
+     *
      * @param id
      * @param pass
      * @return
@@ -145,6 +147,7 @@ public class UserController {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(user);
     }
+
     public String getUserByEmailAndPass(String email, String pass) throws SQLException, JsonProcessingException {
         User user = userDAO.getUserByEmail(email, pass);
         if (user == null) return null;
@@ -155,6 +158,7 @@ public class UserController {
     public boolean isUserExist(String id) throws SQLException {
         return userDAO.isUserExist(id);
     }
+
     public boolean isEmailExist(String email) throws SQLException {
         return userDAO.isUserExistByEmail(email);
     }

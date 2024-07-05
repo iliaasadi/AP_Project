@@ -94,10 +94,10 @@ public class ContactHandler implements HttpHandler {
                                 json.getString("email"),
                                 json.getString("phone_number"),
                                 json.getString("phone_type"),
+                                json.getString("birth_date"),
                                 json.getString("address"),
                                 json.getString("birthday_policy"),
-                                json.getString("instant_message"),
-                                json.getString("birth_date")
+                                json.getString("instant_message")
                         );
                         response = "Done";
                         exchange.sendResponseHeaders(200, response.length());
@@ -118,6 +118,7 @@ public class ContactHandler implements HttpHandler {
                                 json.getString("birthday_policy"),
                                 json.getString("instant_message")
                         );
+//                         System.out.println(json.toString());
                         response = "Done";
                         exchange.sendResponseHeaders(200, response.length());
                         sendResponse(exchange, response);
