@@ -20,6 +20,7 @@ public class User {
 
     private String token;
 
+
     enum Work_Type{
         WANT_TO_HIRED,
         LOOKING_FOR_JOB,
@@ -28,6 +29,8 @@ public class User {
     private Work_Type workType;
 
 
+
+    ////////////token dare in constructor
     public User(String ID, String email, String firstName, String lastName, String passWord,String additionalName, String joinDate, String workType , String token) {
 
         this.ID = ID;
@@ -60,6 +63,24 @@ public class User {
         this.city = null;
         this.country = null;
         this.profession = null;
+        switch (workType){
+            case "want_to_hired" -> this.workType = Work_Type.WANT_TO_HIRED;
+            case "looking_for_job" -> this.workType = Work_Type.LOOKING_FOR_JOB;
+            case "want_to_provide_service" -> this.workType = Work_Type.WANT_TO_PROVIDE_SERVICE;
+
+        }
+    }
+    public User(String ID, String email, String firstName, String lastName, String passWord,String additionalName, String city,String country,String profession, String workType ) {
+
+        this.ID = ID;
+        this.email = email;
+        this.firstName = firstName;
+        this.LastName = lastName;
+        this.passWord = passWord;
+        this.additionalName = additionalName;
+        this.city = city;
+        this.country = country;
+        this.profession = profession;
         switch (workType){
             case "want_to_hired" -> this.workType = Work_Type.WANT_TO_HIRED;
             case "looking_for_job" -> this.workType = Work_Type.LOOKING_FOR_JOB;

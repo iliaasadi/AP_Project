@@ -18,12 +18,12 @@ public class UserDAO {
     }
 
     public void createUserTable() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY ,first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) UNIQUE , password VARCHAR(255) , additional_name VARCHAR(255),city VARCHAR (255),country VARCHAR (255), join_date DATE,work_type VARCHAR (255) )");
+        PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users (id VARCHAR(255) PRIMARY KEY ,first_name VARCHAR(255) , last_name VARCHAR(255) , email VARCHAR(255) UNIQUE , password VARCHAR(255) , additional_name VARCHAR(255),city VARCHAR (255),country VARCHAR (255),profession VARCHAR (255), join_date DATE,work_type VARCHAR (255) )");
         statement.executeUpdate();
     }
 
     public void saveUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name,city , country , join_date, work_type) VALUES (?,?,?,?,?,?,?,?,?,?) ");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (id, first_name , last_name , email , password , additional_name,city , country,profession , join_date, work_type) VALUES (?,?,?,?,?,?,?,?,?,?,?) ");
         statement.setString(1, user.getID());
         statement.setString(2, user.getFirstName());
         statement.setString(3, user.getLastName());
@@ -32,8 +32,9 @@ public class UserDAO {
         statement.setString(6, user.getAdditionalName());
         statement.setString(7, user.getCity());
         statement.setString(8, user.getCountry());
-        statement.setString(9, user.getJoinDate());
-        statement.setString(10, user.getWorkType());
+        statement.setString(9, user.getProfession());
+        statement.setString(10, user.getJoinDate());
+        statement.setString(11, user.getWorkType());
 
         statement.executeUpdate();
     }
@@ -51,7 +52,7 @@ public class UserDAO {
 
 
     public void updateUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,additional_name = ?,city = ? , country = ? , work_type =? WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE users SET first_name = ? , last_name = ?, email = ?, password = ?,additional_name = ?,city = ? , country = ? , profession = ?, work_type =? WHERE id = ?");
 
         statement.setString(1, user.getFirstName());
         statement.setString(2, user.getLastName());
@@ -60,9 +61,10 @@ public class UserDAO {
         statement.setString(5, user.getAdditionalName());
         statement.setString(6, user.getCity());
         statement.setString(7, user.getCountry());
-        statement.setString(8, user.getWorkType());
-        statement.setString(9, user.getID());
-
+        statement.setString(8, user.getProfession());
+        statement.setString(9, user.getWorkType());
+        statement.setString(10, user.getID());
+//        System.out.println(user.toString());
         statement.executeUpdate();
     }
 
@@ -87,6 +89,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
+            user.setCountry(resultSet.getString("profession"));
             user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             return user;
@@ -100,7 +103,9 @@ public class UserDAO {
         ResultSet resultSet = statement.executeQuery();
 
         return resultSet.next();
-    }public boolean isUserExistByEmail(String email) throws SQLException {
+    }
+
+    public boolean isUserExistByEmail(String email) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?");
         statement.setString(1, email);
         ResultSet resultSet = statement.executeQuery();
@@ -132,12 +137,15 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
+            user.setCountry(resultSet.getString("profession"));
             user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             return user;
         }
         return null;
-    }public User getUserByEmail(String email, String userPass) throws SQLException {
+    }
+
+    public User getUserByEmail(String email, String userPass) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
         statement.setString(1, email);
         statement.setString(2, userPass);
@@ -152,6 +160,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
+            user.setCountry(resultSet.getString("profession"));
             user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             return user;
@@ -173,6 +182,7 @@ public class UserDAO {
             user.setAdditionalName(resultSet.getString("additional_name"));
             user.setCity(resultSet.getString("city"));
             user.setCountry(resultSet.getString("country"));
+            user.setCountry(resultSet.getString("profession"));
             user.setJoinDate(resultSet.getString("join_date"));
             user.setWorkType(resultSet.getString("work_type"));
             users.add(user);
