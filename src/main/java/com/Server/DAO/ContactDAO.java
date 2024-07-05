@@ -63,14 +63,14 @@ public class ContactDAO {
         statement.setString(1, userId);
         ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
             Contact contact = new Contact();
+        if (resultSet.next()) {
             contact.setID(resultSet.getString("id"));
             contact.setProfileURL(resultSet.getString("profile_url"));
             contact.setShareEmail(resultSet.getString("email"));
             contact.setPhoneNumber(resultSet.getString("phone_number"));
             contact.setNumberType(resultSet.getString("phone_type"));
-            contact.setBirthdate(String.valueOf(resultSet.getDate("birth_day")));
+            contact.setBirthdate(resultSet.getString("birth_date"));
             contact.setBirthdayPolicy(resultSet.getString("birthday_policy"));
             contact.setAddress(resultSet.getString("address"));
             contact.setInstantMassaging(resultSet.getString("instant_message"));
@@ -92,7 +92,7 @@ public class ContactDAO {
             contact.setShareEmail(resultSet.getString("email"));
             contact.setPhoneNumber(resultSet.getString("phone_number"));
             contact.setNumberType(resultSet.getString("phone_type"));
-            contact.setBirthdate(resultSet.getString("birth_day"));
+            contact.setBirthdate(resultSet.getString("birth_date"));
             contact.setBirthdayPolicy(resultSet.getString("birthday_policy"));
             contact.setAddress(resultSet.getString("address"));
             contact.setInstantMassaging(resultSet.getString("instant_message"));

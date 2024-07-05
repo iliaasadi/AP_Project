@@ -28,8 +28,12 @@ public class ContactHandler implements HttpHandler {
             String request = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
             String[] pathParts = path.split("/");
+
             try {
-                id = JwtExtractor.ExtractToken(exchange);
+                id = pathParts[3];
+                System.out.println(id);
+
+
                 if (id == null) {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
@@ -45,14 +49,17 @@ public class ContactHandler implements HttpHandler {
             if (pathParts[2].equals("view")) {
 
                 if (id != null) {
+
                     response = contactController.getContact(id);
+
+                    System.out.println(response);
                     if (response == null) {
                         response = "Wrong input";
                         exchange.sendResponseHeaders(400, response.length());
                     } else {
 
-                        Headers responseHeaders = exchange.getResponseHeaders();
-                        responseHeaders.add("LKN", id); // Add LKN to response headers
+//                        Headers responseHeaders = exchange.getResponseHeaders();
+//                        responseHeaders.add("LKN", token); // Add LKN to response headers
                         exchange.sendResponseHeaders(200, response.length());
 
                         sendResponse(exchange, response);
@@ -63,33 +70,36 @@ public class ContactHandler implements HttpHandler {
                 }
             }
             if (pathParts[2].equals("edit")) {
-                if (pathParts.length == 3) {
+                if (pathParts.length == 4) {
 
                     JSONObject json = getJsonObject(exchange);
 
+                    System.out.println(json.getString("birthday_policy"));
                     if (!isValidJson(json)) {
                         response = "Wrong JSON";
                         exchange.sendResponseHeaders(401, response.length());
 
-                    } else if (id != null && contactController.getContact(id) == null) {
-                        System.out.println(123);
+                    }
+                     if (id != null && contactController.getContact(id) == null) {
                         contactController.creatContact(
                                 json.getString("id"),
                                 json.getString("profile_url"),
                                 json.getString("email"),
                                 json.getString("phone_number"),
                                 json.getString("phone_type"),
-                                (String) json.get("birth_date"),
                                 json.getString("address"),
                                 json.getString("birthday_policy"),
-                                json.getString("instant_message")
+                                json.getString("instant_message"),
+                                json.getString("birth_date")
                         );
                         response = "Done";
                         exchange.sendResponseHeaders(200, response.length());
                         sendResponse(exchange, response);
 
                         return;
-                    }else if (id != null) {
+                    } else if (id != null) {
+
+
                         contactController.updateContact(
                                 json.getString("id"),
                                 json.getString("profile_url"),
@@ -117,7 +127,7 @@ public class ContactHandler implements HttpHandler {
                 exchange.sendResponseHeaders(400, response.length());
             }
         } catch (Exception e) {
-            System.out.println("sdgfdfg354");
+//            System.out.println("ErrorContactFuckedddddddddme");
             response = "Error";
             exchange.sendResponseHeaders(404, response.length());
             e.printStackTrace();
