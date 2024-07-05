@@ -54,7 +54,7 @@ public class ContactHandler implements HttpHandler {
 
                     response = contactController.getContact(id);
 
-                    System.out.println(response);
+//                    System.out.println(response);
                     if (response == null) {
                         response = "Wrong input";
                         exchange.sendResponseHeaders(400, response.length());
