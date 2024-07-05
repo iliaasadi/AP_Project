@@ -120,7 +120,10 @@ public class Contact {
     }
 
     public String getBirthdayPolicy() {
-        return BirthdayPolicy.name().toLowerCase();
+        if(BirthdayPolicy == null){
+            return "me";
+        }
+        else return BirthdayPolicy.name().toLowerCase();
     }
 
     public void setBirthdayPolicy(String birthdayPolicy) {

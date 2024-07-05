@@ -30,9 +30,9 @@ public class ContactHandler implements HttpHandler {
             String[] pathParts = path.split("/");
 
             try {
-                id = pathParts[3];
-                System.out.println(id);
 
+                id = JwtExtractor.ExtractToken(exchange);
+//                System.out.println(id);
 
                 if (id == null) {
                     response = "Wrong input";
@@ -48,7 +48,9 @@ public class ContactHandler implements HttpHandler {
             }
             if (pathParts[2].equals("view")) {
 
+//                System.out.println(id);
                 if (id != null) {
+//                    System.out.println(id);
 
                     response = contactController.getContact(id);
 
@@ -58,11 +60,15 @@ public class ContactHandler implements HttpHandler {
                         exchange.sendResponseHeaders(400, response.length());
                     } else {
 
-//                        Headers responseHeaders = exchange.getResponseHeaders();
-//                        responseHeaders.add("LKN", token); // Add LKN to response headers
-                        exchange.sendResponseHeaders(200, response.length());
 
+//                        Headers responseHeaders = exchange.getResponseHeaders();
+//                        responseHeaders.; // Add LKN to response headers
+//                        System.out.println(id);
+                        exchange.sendResponseHeaders(200, response.length());
+//                        System.out.println(id);
                         sendResponse(exchange, response);
+
+
                     }
                 } else {
                     response = "Wrong input";
@@ -70,12 +76,13 @@ public class ContactHandler implements HttpHandler {
                 }
             }
             if (pathParts[2].equals("edit")) {
-                if (pathParts.length == 4) {
+                if (pathParts.length == 3) {
 
                     JSONObject json = getJsonObject(exchange);
 
-                    System.out.println(json.getString("birthday_policy"));
+//                    System.out.println(json.getString("birthday_policy"));
                     if (!isValidJson(json)) {
+//                    System.out.println(json.getString("birthday_policy"));
                         response = "Wrong JSON";
                         exchange.sendResponseHeaders(401, response.length());
 
