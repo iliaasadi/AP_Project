@@ -1,12 +1,15 @@
 package com.Server.handlers;
 
 
+import com.Server.DAO.EducationDAO;
 import com.Server.JWT.JwtExtractor;
 import com.Server.controller.EducationController;
+import com.Server.model.Education;
 import com.Server.model.Skill;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
+import org.json.JSONString;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,178 +36,235 @@ public class EducationHandler implements HttpHandler {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                     sendResponse(exchange, response);
-                    return;
                 }
             } catch (Exception e) {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
-                return;
+
             }
 
-            if (request.equals("GET")) {
+//            if (request.equals("GET")) {
+//
+//                if (pathParts.length == 3) {
+//                    if (pathParts[2].equals("all")) { // education/all
+//                        response = educationController.getEducations();
+//                        exchange.sendResponseHeaders(200, response.length());
+//                    } else { // education/instituteName
+//                        String institute = pathParts[2];
+//
+//                        if (id != null) {
+//                            response = educationController.getEducationByIDAndInstitute(id, institute);
+//                            if (response == null) {
+//                                response = "Wrong input";
+//                                exchange.sendResponseHeaders(400, response.length());
+//                            } else {
+//                                exchange.sendResponseHeaders(200, response.length());
+//                            }
+//                        } else {
+//                            response = "Wrong input";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                        }
+//                    }
+//                } else if (pathParts.length == 2) { // /education -> return all of that person's educations
+//
+//                    if (id != null) {
+//                        response = educationController.getEducations(id);
+//                        if (response == null) {
+//                            response = "Wrong input!";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                        } else {
+//                            exchange.sendResponseHeaders(200, response.length());
+//                        }
+//                    } else {
+//                        response = "Wrong input";
+//                        exchange.sendResponseHeaders(400, response.length());
+//                    }
+//                } else {
+//                    response = "Wrong input";
+//                    exchange.sendResponseHeaders(400, response.length());
+//                }
+//            }
 
+            if (pathParts[2].equals("edit")) {
                 if (pathParts.length == 3) {
-                    if (pathParts[2].equals("all")) { // education/all
-                        response = educationController.getEducations();
-                        exchange.sendResponseHeaders(200, response.length());
-                    } else { // education/instituteName
-                        String institute = pathParts[2];
 
-                        if (id != null) {
-                            response = educationController.getEducationByIDAndInstitute(id, institute);
-                            if (response == null) {
-                                response = "Wrong input";
-                                exchange.sendResponseHeaders(400, response.length());
-                            } else {
-                                exchange.sendResponseHeaders(200, response.length());
-                            }
-                        } else {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
+                    JSONObject json = getJsonObject(exchange);
+//                    System.out.println(json);
+//
+                    if (!isValidJson(json)) {
+                        response = "Wrong JSON";
+                        exchange.sendResponseHeaders(401, response.length());
+
                     }
-                } else if (pathParts.length == 2) { // /education -> return all of that person's educations
+                    if (id != null && educationController.getEducations(id) == null) {
+                         System.out.println(json.toString());
+                         String a1 = json.getString("id");
+                         String a2 = json.getString("institute");
+                         String a3 = json.getString("field_study");
+                         String a4 = json.getString("start_date");
+                         String a5 = json.getString("finish_date");
+                         float a6 = json.getFloat("grade");
+                         String a7 = json.getString("activity_descreption");
+                         String a8 = json.getString("education_description");
 
-                    if (id != null) {
-                        response = educationController.getEducations(id);
-                        if (response == null) {
-                            response = "Wrong input!";
-                            exchange.sendResponseHeaders(400, response.length());
-                        } else {
-                            exchange.sendResponseHeaders(200, response.length());
-                        }
-                    } else {
+//                        EducationDAO educationDAO = new EducationDAO();
+//                        System.out.println(a1+a2+a3+a4+a5+a6+a7+a8);
+//                        Education education = new Education(a1,a2,a3,a4,a5,a6,a7,a8);
+//                        System.out.println(1);
+//                         educationDAO.createEducationTable();
+//                        System.out.println(2);
+
+                        educationController.creatEducation(
+                                json.getString("id"),
+                                json.getString("institute"),
+                                json.getString("field_study"),
+                                json.getString("start_date"),
+                                json.getString("finish_date"),
+                                json.getFloat("grade"),
+                                json.getString("activity_descreption"),
+                                json.getString("education_description")
+                        );
+                        System.out.println("done");
+                        response = "Done";
+                        exchange.sendResponseHeaders(200, response.length());
+                        sendResponse(exchange, response);
+
+
+                    } else if (id != null && educationController.getEducations(id) != null) {
+
+
+                        educationController.updateEducation(
+                                json.getString("id"),
+                                json.getString("institute"),
+                                json.getString("field_study"),
+                                json.getString("start_date"),
+                                json.getString("finish_date"),
+                                json.getFloat("grade"),
+                                json.getString("activity_descreption"),
+                                json.getString("education_description")
+                        );
+                        response = "Done";
+                        exchange.sendResponseHeaders(200, response.length());
+                        sendResponse(exchange, response);
+
+
+                    }else {
                         response = "Wrong input";
                         exchange.sendResponseHeaders(400, response.length());
+                        sendResponse(exchange, response);
                     }
                 } else {
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
+                    sendResponse(exchange, response);
                 }
             }
+//            if (request.equals("DELETE")) {
+//                {
+//
+//                    if (pathParts.length == 2) {
+//
+//                        if (id == null) {
+//                            response = "Wrong input";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                        } else if (educationController.getEducations(id) != null) {
+//                            educationController.deleteEducationByID(id);
+//                            response = "Done";
+//                            exchange.sendResponseHeaders(200, response.length());
+//                        } else {
+//                            response = "Wrong input";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                        }
+//                    } else if (pathParts.length == 3) {
+//
+//                        String institute = pathParts[2];
+//                        if (id == null) {
+//                            response = "Wrong input";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                        } else if (educationController.getEducationByIDAndInstitute(id, institute) != null) {
+//                            educationController.deleteEducationByIDAndInstitute(id, institute);
+//                            response = "Done";
+//                            exchange.sendResponseHeaders(200, response.length());
+//                        } else {
+//                            response = "Education not found";
+//                            exchange.sendResponseHeaders(404, response.length());
+//                        }
+//                    } // education/instituteName
+//                    else {
+//                        response = "Wrong input";
+//                        exchange.sendResponseHeaders(400, response.length());
+//                    }
+//
+//                }
+//            }
+            if (pathParts[2].equals("view")) {
 
-            if (request.equals("PUT")) {
-                {
+//                System.out.println(id);
+                if (id != null) {
+//                    System.out.println(id);
 
-                    if (pathParts.length == 2) { // education -> update education
+                    response = educationController.getEducations(id);
+//                    System.out.println(response);
 
-                        JSONObject jsonObject = getJsonObject(exchange);
-                        String institute = jsonObject.getString("institute");
-                        if (!isValidJson(jsonObject)) {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                            sendResponse(exchange, response);
-                        }
-                        if (id == null) {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        } else {
-                            if (educationController.getEducationByIDAndInstitute(id, institute) != null) {
-                                educationController.updateEducation(
-                                        jsonObject.getString("id"),
-                                        jsonObject.getString("institute"),
-                                        jsonObject.getString("field_study"),
-                                        jsonObject.getString("start_date"),
-                                        jsonObject.getString("finish_date"),
-                                        jsonObject.getFloat("grade"),
-                                        jsonObject.getString("activity_description"),
-                                        jsonObject.getString("education_description"),
-                                        (Skill) jsonObject.get("skill"),
-                                        jsonObject.getString("edu_notification"));
-                                response = "Done";
-                                exchange.sendResponseHeaders(200, response.length());
-                            } else {
-                                response = "Wrong input";
-                                exchange.sendResponseHeaders(400, response.length());
-                            }
-                        }
+                    if (response == null) {
+                        response = "Wrong input";
+                        exchange.sendResponseHeaders(400, response.length());
                     } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
 
+
+//                        Headers responseHeaders = exchange.getResponseHeaders();
+//                        responseHeaders.; // Add LKN to response headers
+//                        System.out.println(id);
+                        exchange.sendResponseHeaders(200, response.length());
+//                        System.out.println(id);
+                        sendResponse(exchange, response);
+
+
+                    }
                 }
             }
-            if (request.equals("DELETE")) {
-                {
-
-                    if (pathParts.length == 2) {
-
-                        if (id == null) {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        } else if (educationController.getEducations(id) != null) {
-                            educationController.deleteEducationByID(id);
-                            response = "Done";
-                            exchange.sendResponseHeaders(200, response.length());
-                        } else {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
-                    } else if (pathParts.length == 3) {
-
-                        String institute = pathParts[2];
-                        if (id == null) {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        } else if (educationController.getEducationByIDAndInstitute(id, institute) != null) {
-                            educationController.deleteEducationByIDAndInstitute(id, institute);
-                            response = "Done";
-                            exchange.sendResponseHeaders(200, response.length());
-                        } else {
-                            response = "Education not found";
-                            exchange.sendResponseHeaders(404, response.length());
-                        }
-                    } // education/instituteName
-                    else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-
-                }
-            }
-            if (request.equals("POST")) {
-                {
-
-                    if (pathParts.length == 2) {
-
-                        JSONObject jsonObject = getJsonObject(exchange);
-                        if (!isValidJson(jsonObject)) {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                            sendResponse(exchange, response);
-                        }
-                        if (id != null) {
-                            if (educationController.getEducationByIDAndInstitute(id, jsonObject.getString("institute")) == null) {
-                                educationController.creatEducation(
-                                        jsonObject.getString("id"),
-                                        jsonObject.getString("institute"),
-                                        jsonObject.getString("field_study"),
-                                        jsonObject.getString("start_date"),
-                                        jsonObject.getString("finish_date"),
-                                        jsonObject.getFloat("grade"),
-                                        jsonObject.getString("activity_description"),
-                                        jsonObject.getString("education_description"),
-                                        (Skill) jsonObject.get("skill"),
-                                        jsonObject.getString("edu_notification"));
-                                response = "Done";
-                                exchange.sendResponseHeaders(200, response.length());
-                            } else {
-                                response = "Wrong input";
-                                exchange.sendResponseHeaders(400, response.length());
-                            }
-                        } else {
-                            response = "Wrong input";
-                            exchange.sendResponseHeaders(400, response.length());
-                        }
-                    } else {
-                        response = "Wrong input";
-                        exchange.sendResponseHeaders(400, response.length());
-                    }
-
-                }
-            } else {
+//            if (pathParts[2].equals("POST")) {
+//                {
+//
+//                    if (pathParts.length == 3) {
+//
+//                        JSONObject jsonObject = getJsonObject(exchange);
+//                        if (!isValidJson(jsonObject)) {
+//                            response = "Wrong input";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                            sendResponse(exchange, response);
+//                        }
+//                        if (id != null) {
+//                            if (educationController.getEducationByIDAndInstitute(id, jsonObject.getString("institute")) == null) {
+//                                educationController.creatEducation(
+//                                        jsonObject.getString("id"),
+//                                        jsonObject.getString("institute"),
+//                                        jsonObject.getString("field_study"),
+//                                        jsonObject.getString("start_date"),
+//                                        jsonObject.getString("finish_date"),
+//                                        jsonObject.getFloat("grade"),
+//                                        jsonObject.getString("activity_description"),
+//                                        jsonObject.getString("education_description"),
+//                                        jsonObject.getString("edu_notification"));
+//                                response = "Done";
+//                                exchange.sendResponseHeaders(200, response.length());
+//                            } else {
+//                                response = "Wrong input";
+//                                exchange.sendResponseHeaders(400, response.length());
+//                            }
+//                        } else {
+//                            response = "Wrong input";
+//                            exchange.sendResponseHeaders(400, response.length());
+//                        }
+//                    } else {
+//                        response = "Wrong input";
+//                        exchange.sendResponseHeaders(400, response.length());
+//                    }
+//
+//                }
+//            }
+            else {
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
@@ -231,7 +291,7 @@ public class EducationHandler implements HttpHandler {
     }
 
     private boolean isValidJson(JSONObject jsonObject) {
-        return jsonObject.has("institute") && jsonObject.has("field_study") && jsonObject.has("start_date") && jsonObject.has("finish_date") && jsonObject.has("grade") && jsonObject.has("activity_description") && jsonObject.has("education_description") && jsonObject.has("edu_notification") && jsonObject.has("id") && jsonObject.has("skill");
+        return jsonObject.has("institute") && jsonObject.has("field_study") && jsonObject.has("start_date") && jsonObject.has("finish_date") && jsonObject.has("grade") && jsonObject.has("activity_descreption") && jsonObject.has("education_description")  && jsonObject.has("id") ;
     }
 
     private void sendResponse(HttpExchange exchange, String response) throws IOException {

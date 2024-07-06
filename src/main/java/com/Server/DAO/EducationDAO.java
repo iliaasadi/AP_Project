@@ -16,19 +16,17 @@ public class EducationDAO {
         createEducationTable();
     }
 
-    /**
-     * check class """"skill"""" and relate it here !!!!!!!!!!!!!!!!!!!
-     *
-     * @throws SQLException
-     */
+
     public void createEducationTable() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS educations (id VARCHAR(255) PRIMARY KEY, institute VARCHAR (255) , field_study VARCHAR (255) , start_date DATE , finish_date DATE , grade FLOAT , activity_description VARCHAR (255) , education_description VARCHAR (255))");
         statement.executeUpdate();
+        statement.executeUpdate();
     }
 
-    public void saveEducation(Education education, String id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_descreption, education_description, edu_notification) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)");
-        statement.setString(1, id);
+    public void saveEducation(Education education) throws SQLException {
+
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO educations (id, institute, field_study, start_date, finish_date, grade, activity_descreption, education_description) VALUES (?, ?, ?, ?, ?, ?, ?, ? )");
+        statement.setString(1, education.getId());
         statement.setString(2, education.getInstituteName());
         statement.setString(3, education.getFieldOfStudy());
         statement.setString(4, education.getEducationStartDate());
@@ -36,8 +34,7 @@ public class EducationDAO {
         statement.setFloat(6, education.getGrade());
         statement.setString(7, education.getEducationalActivitiesDescription());
         statement.setString(8, education.getEducationalDescription());
-        statement.setString(9, education.getEduNotification());
-
+        statement.executeUpdate();
         statement.executeUpdate();
     }
 
@@ -53,7 +50,7 @@ public class EducationDAO {
     }
 
     public void deleteEducation(String id, String institute) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM education WHERE id = ? AND institute = ?");
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM educations WHERE id = ? AND institute = ?");
 
         statement.setString(1, id);
         statement.setString(2, institute);
@@ -64,7 +61,7 @@ public class EducationDAO {
 
 
     public void updateEducation(Education education, String id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ?,edu_notification =? WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE educations SET institute = ?, field_study = ?, start_date = ?, finish_date = ?, grade = ?, activity_descreption = ?, education_description = ? WHERE id = ?");
         statement.setString(1, education.getInstituteName());
         statement.setString(2, education.getFieldOfStudy());
         statement.setString(3, education.getEducationStartDate());
@@ -72,20 +69,19 @@ public class EducationDAO {
         statement.setFloat(5, education.getGrade());
         statement.setString(6, education.getEducationalActivitiesDescription());
         statement.setString(7, education.getEducationalDescription());
-        statement.setString(8, education.getEduNotification());
-        statement.setString(9, id);
+        statement.setString(8, id);
 
 
         statement.executeUpdate();
     }
 
-    public Education getEducation(String userId) throws SQLException {
+    public Education getEducationsbyid(String userId) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM educations WHERE id = ?");
         statement.setString(1, userId);
         ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
             Education education = new Education();
+        if (resultSet.next()) {
             education.setId(resultSet.getString("id"));
             education.setInstituteName(resultSet.getString("institute"));
             education.setFieldOfStudy(resultSet.getString("field_study"));
@@ -94,8 +90,8 @@ public class EducationDAO {
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
-            education.setEduNotification("edu_notification");
 
+            System.out.println(education.toString() + "123");
             return education;
         }
 
@@ -118,7 +114,7 @@ public class EducationDAO {
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
-            education.setEduNotification("edu_notification");
+
 
             return education;
         }
@@ -141,7 +137,7 @@ public class EducationDAO {
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
-            education.setEduNotification(resultSet.getString("edu_notification"));
+
 
             educations.add(education);
         }
@@ -165,7 +161,6 @@ public class EducationDAO {
             education.setGrade(resultSet.getFloat("grade"));
             education.setEducationalActivitiesDescription(resultSet.getString("activity_description"));
             education.setEducationalDescription(resultSet.getString("education_description"));
-            education.setEduNotification(resultSet.getString("edu_notification"));
 
             educations.add(education);
         }
