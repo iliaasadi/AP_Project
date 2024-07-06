@@ -14,14 +14,26 @@ public class Education {
     // ""shrhe faaliat"" va ""anjoman""  fargh darad ba ""tozihat"" 2ta field jodan
     private String educationalActivitiesDescription;
     private String educationalDescription;
-//    private Skill educationalSkills;
+
+    public Education(String id, String instituteName, String fieldOfStudy, String educationStartDate, String educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription) {
+        Id = id;
+        this.instituteName = instituteName;
+        this.fieldOfStudy = fieldOfStudy;
+        this.educationStartDate = educationStartDate;
+        this.educationFinishDate = educationFinishDate;
+        this.grade = grade;
+        this.educationalActivitiesDescription = educationalActivitiesDescription;
+        this.educationalDescription = educationalDescription;
+    }
+
+    //    private Skill educationalSkills;
     enum notification {
         ME,
         CONTACTS,
         EVERYONE
     }
     private notification eduNotification;
-    public Education(String Id, String instituteName, String fieldOfStudy, String educationStartDate, String educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, Skill educationalSkills, String notificationEduStr) {
+    public Education(String Id, String instituteName, String fieldOfStudy, String educationStartDate, String educationFinishDate, float grade, String educationalActivitiesDescription, String educationalDescription, String notificationEduStr) {
         this.Id = Id;
         this.instituteName = instituteName;
         this.fieldOfStudy = fieldOfStudy;
@@ -30,13 +42,14 @@ public class Education {
         this.grade = grade;
         this.educationalActivitiesDescription = educationalActivitiesDescription;
         this.educationalDescription = educationalDescription;
-        //this.educationalSkills = educationalSkills;
+
         switch (notificationEduStr) {
             case "me" -> this.eduNotification = notification.ME;
             case "contacts" -> this.eduNotification = notification.CONTACTS;
             case "everyone" -> this.eduNotification = notification.EVERYONE;
         }
     }
+
 
     public Education() {
     }
