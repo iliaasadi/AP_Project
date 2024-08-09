@@ -104,7 +104,7 @@ public class ContactHandler implements HttpHandler {
                         sendResponse(exchange, response);
 
                         return;
-                    } else if (id != null) {
+                    } else if (id != null && contactController.getContact(id) != null) {
 
 
                         contactController.updateContact(

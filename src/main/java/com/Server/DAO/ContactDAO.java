@@ -46,7 +46,7 @@ public class ContactDAO {
     }
 
     public void updateContacts(Contact contact) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE contacts SET email = ? , phone_number = ? , phone_type = ? , birth_date = ? , birthday_policy = ? , address = ? , instant_message = ? WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE contacts SET email = ? , phone_number = ? , phone_type = ? , birth_date = ? , birthday_policy = ? , address = ? , profile_url = ?, instant_message = ? WHERE id = ?");
         statement.setString(1, contact.getShareEmail());
         statement.setString(2, contact.getPhoneNumber());
         statement.setString(3, contact.getNumberType());
@@ -54,7 +54,8 @@ public class ContactDAO {
         statement.setString(5, contact.getBirthdayPolicy());
         statement.setString(6, contact.getAddress());
         statement.setString(7, contact.getInstantMassaging());
-        statement.setString(8, contact.getID());
+        statement.setString(8, contact.getProfileURL());
+        statement.setString(9, contact.getID());
         statement.executeUpdate();
     }
 
@@ -74,6 +75,7 @@ public class ContactDAO {
             contact.setBirthdayPolicy(resultSet.getString("birthday_policy"));
             contact.setAddress(resultSet.getString("address"));
             contact.setInstantMassaging(resultSet.getString("instant_message"));
+            System.out.println(contact.getBirthdate());
             return contact;
         }
 

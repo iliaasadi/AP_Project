@@ -33,11 +33,13 @@ public class EducationHandler implements HttpHandler {
             try {
                 id = JwtExtractor.ExtractToken(exchange);
                 if (id == null) {
+                    System.out.println("w1");
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                     sendResponse(exchange, response);
                 }
             } catch (Exception e) {
+                System.out.println("w2");
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
@@ -150,11 +152,13 @@ public class EducationHandler implements HttpHandler {
 
 
                     }else {
+                        System.out.println("w3");
                         response = "Wrong input";
                         exchange.sendResponseHeaders(400, response.length());
                         sendResponse(exchange, response);
                     }
                 } else {
+                    System.out.println("w4");
                     response = "Wrong input";
                     exchange.sendResponseHeaders(400, response.length());
                     sendResponse(exchange, response);
@@ -208,6 +212,7 @@ public class EducationHandler implements HttpHandler {
 //                    System.out.println(response);
 
                     if (response == null) {
+                        System.out.println("w5");
                         response = "Wrong input";
                         exchange.sendResponseHeaders(400, response.length());
                     } else {
@@ -265,12 +270,14 @@ public class EducationHandler implements HttpHandler {
 //                }
 //            }
             else {
+                System.out.println("w6");
                 response = "Wrong input";
                 exchange.sendResponseHeaders(400, response.length());
                 sendResponse(exchange, response);
             }
             sendResponse(exchange, response);
         } catch (Exception e) {
+            System.out.println("w7");
             response = "Error";
             exchange.sendResponseHeaders(400, response.length());
             sendResponse(exchange, response);
